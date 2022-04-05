@@ -153,8 +153,8 @@
 <script type="text/javascript" src="//cdn.embed.ly/player-0.1.0.min.js"></script>
 <script>
     var url = document.URL;
-    var b = url.split('#')[1];
-    console.log(b);
+    var roomId = url.split('#')[1];
+    
     var connection = new signalR.HubConnectionBuilder()
         .withUrl('/chat')
         .build();
@@ -183,11 +183,17 @@
             //    }
             //    console.log(event.data.time);
             //}
+            var err;
             if (event.data.event == 'paused') {
                 console.log("Signal pause!");
                 try {
-                    connection.invoke("SetTime", seekMain);
-                    connection.invoke("Pause", "pause", seekMain);
+                    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+                    console.log(roomId);
+                    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    connection.invoke("SetTime", roomId, seekMain);
+                    connection.invoke("Pause", roomId, seekMain);
+                    console.log(roomId);
                 } catch (err) {
                     console.error(err);
                 }
@@ -199,10 +205,11 @@
                     //connection.invoke("Enter", "test", name);
                     console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                     console.log(seekMain);
+                    console.log(roomId);
                     console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                    connection.invoke("SetTime", seekMain);
+                    //connection.invoke("SetTime", seekMain);
                     document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seekMain }, "*");
-                    connection.invoke("Play", "play", seekMain);
+                    connection.invoke("Play", roomId, seekMain);
                 } catch (err) {
                     console.error(err);
                 }
@@ -214,7 +221,7 @@
         document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seek }, "*");
 
     });
-    connection.on('SetTime', function (time) {
+    connection.on('SetTime', function (command, time) {
 
         document.getElementById("if").contentWindow.postMessage({ "api": "seek","set":time }, "*");
     });
@@ -236,7 +243,7 @@
 
         });
     document.getElementById("con").addEventListener("click", function (e) {
-        connection.invoke("Enter", "qwe", name);
+        connection.invoke("Enter", roomId, name);
     });
     connection.start();
 </script>

@@ -13,17 +13,17 @@ namespace ChatSample.Hubs
         //    _channelName = channelName;
         //}
        
-        public async Task Enter(string groupname, string username)
+        public async Task Enter(string roomId, string username)
         {
-            this.ChannelName = groupname;
+            this.ChannelName = roomId;
             if (String.IsNullOrEmpty(username))
             {
                 await Clients.Caller.SendAsync("Notify", "Для входа в чат введите логин");
             }
             else
             {
-                await Groups.AddToGroupAsync(Context.ConnectionId, groupname);
-                await Clients.Group(ChannelName).SendAsync("Notify", $"{username} вошел в чат");
+                await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
+                await Clients.Group(roomId).SendAsync("Notify", $"{username} вошел в чат");
             }
         }
         //public async Task AddToGroup(string groupName)
@@ -39,19 +39,19 @@ namespace ChatSample.Hubs
 
         //    await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
         //}
-        public async Task Play(string command, double seek)
+        public async Task Play(string roomId, double seek)
         {
             // Call the broadcastMessage method to update clients.
-            await Clients.Group(ChannelName).SendAsync("Play", command, seek);
+            await Clients.Group(roomId).SendAsync("Play", roomId, seek);
         }
 
-        public async Task Pause(string command, double seek)
+        public async Task Pause(string roomId, double seek)
         {
-            await Clients.Group(ChannelName).SendAsync("Pause", command, seek);
+            await Clients.Group(roomId).SendAsync("Pause", roomId, seek);
         }
-        public async Task SetTime(double time)
+        public async Task SetTime(string roomId,double time)
         {
-            await Clients.All.SendAsync("SetTime", time);
+            await Clients.Group(roomId).SendAsync("SetTime", time);
         }
     }
 }
