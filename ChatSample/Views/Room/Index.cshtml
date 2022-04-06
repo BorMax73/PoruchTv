@@ -8,6 +8,7 @@
     <input type="number" id="timeI"/>
     <ul id="discussion"></ul>
 </div>
+<div id="welcome"></div>
 <button id="con">Connect</button>
 <iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" width="640" height="480" style="horiz-align: right; vertical-align: bottom" frameborder="0" allowfullscreen></iframe>
 <!--Script references. -->
@@ -191,7 +192,7 @@
 
                     console.log(roomId);
                     console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                    connection.invoke("SetTime", roomId, seekMain);
+                    //connection.invoke("SetTime", roomId, seekMain);
                     connection.invoke("Pause", roomId, seekMain);
                     console.log(roomId);
                 } catch (err) {
@@ -208,7 +209,7 @@
                     console.log(roomId);
                     console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                     //connection.invoke("SetTime", seekMain);
-                    document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seekMain }, "*");
+                    //document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seekMain }, "*");
                     connection.invoke("Play", roomId, seekMain);
                 } catch (err) {
                     console.error(err);
@@ -240,7 +241,12 @@
             name = prompt('Enter your name:', '');
             // Set initial focus to message input box.
             messageInput.focus();
-
+            if (name) {
+                document.querySelector('#welcome').innerHTML = `<b>${name}</b>, добро пожаловать на сайт!`;
+                connection.invoke("Enter", roomId, name);
+            } else {
+                document.querySelector('#welcome').innerHTML = '<b>Гость</b>, добро пожаловать на сайт!';
+            }
         });
     document.getElementById("con").addEventListener("click", function (e) {
         connection.invoke("Enter", roomId, name);
