@@ -4,6 +4,7 @@ using ChatSample.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using poruchTv.Models;
+using poruchTv.Models.API;
 using poruchTv.Models.Random;
 
 namespace poruchTv.Controllers
@@ -18,9 +19,10 @@ namespace poruchTv.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var content = await SearchAPI.Search();
+            return View(content);
         }
         [HttpPost]
         public IActionResult Create()

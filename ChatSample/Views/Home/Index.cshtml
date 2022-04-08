@@ -1,8 +1,86 @@
-﻿@{
+﻿@using System.Text
+@model IEnumerable<poruchTv.Models.Video.Content>
+@{
     ViewData["Title"] = "Home Page";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<form method="post" action="@Url.Action("Create")">
-    <input type="submit" value="Click me!"/>
-</form>
+<div class="container">
+    <div class="search">
+        <h1>Movie Poster Search</h1>
+        <div id="fetch">
+            <input type="text" placeholder="enter movie title here" id="term" />
+            <button id="search">Find</button>
+        </div>
+        <div id="poster">
+        </div>
+    </div>
+</div>
+<div>
+    <table>
+        @foreach (var o in Model)
+        {
+            
+            <tr>
+                <td>@o.orig_title</td>
+                <td><img src="@o.imgUrl"/></td>
+            </tr>
+        }
+    </table>
+</div>
+    @*@for (int i = 0; i < Model.Count(); i++)
+    {
+        <div #="@i"/>
 
+    }*@
+
+
+  
+    
+    <script>
+
+        $('#term').focus(function(){
+            var full = $("#poster").has("img").length ? true : false;
+            if(full == false){
+                $('#poster').empty();
+            }
+        });
+
+        var getPoster = function(){
+
+            var film = $('#term').val();
+
+            if(film == ''){
+
+                $('#poster').html('<div class="alert"><strong>Oops!</strong> Try adding something into the search field.</div>');
+
+            } else {
+
+                $('#poster').html('<div class="alert"><strong>Loading...</strong></div>');
+
+                $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=" + film + "&callback=?", function(json) {
+                    if (json != "Nothing found."){                 
+                        console.log(json);
+                        $('#poster').html('<p>Your search found: <strong>' + json.results[0].title + '</strong></p><img src=\"http://image.tmdb.org/t/p/w500/' + json.results[0].poster_path + '\" class=\"img-responsive\" >');
+                    } else {
+                        $.getJSON("https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=goonies&callback=?", function(json) {
+                       
+                            console.log(json);
+                            $('#poster').html('<div class="alert"><p>We\'re afraid nothing was found for that search.</p></div><p>Perhaps you were looking for The Goonies?</p><img id="thePoster" src="http://image.tmdb.org/t/p/w500/' + json[0].poster_path + ' class="img-responsive" />');
+                        });
+                    }
+                });
+
+            }
+
+            return false;
+        }
+
+        $('#search').click(getPoster);
+        $('#term').keyup(function(event){
+            if(event.keyCode == 13){
+                getPoster();
+            }
+        });
+
+    </script>
