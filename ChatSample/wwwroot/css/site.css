@@ -11,7 +11,15 @@ a.navbar-brand {
 a {
   color: #0366d6;
 }
+tr:hover {
+    background: red;
+}
 
+td a {
+    display: block;
+    border: 1px solid black;
+    padding: 16px;
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

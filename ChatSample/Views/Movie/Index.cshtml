@@ -1,0 +1,40 @@
+﻿@model poruchTv.Models.Video.Content
+@{
+    ViewData["Title"] = Model.orig_title;
+}
+<div>
+    <img src="@Model.imgUrl"/>
+    <h2>@Model.title</h2>
+    <p>@Model.year</p>
+    <form method="post" action="/Movie/Create?urlI=@Model.iframe_src">
+        <input type="hidden" value="@Model.imgUrl" name="PhoneId" />
+        <input #="target" type="submit" class="btn btn-default" value="Go"/>
+    </form>
+    @*@using (Html.BeginForm("Create", "Movie", Model,FormMethod.Get))
+    {
+        <table>
+            <tr>
+                <td><input type="submit" value="Submit"/></td>
+            </tr>
+        </table>
+    }*@
+</div>
+<script>
+    function send() {
+      
+
+        $('#target').html('sending..');
+
+        $.ajax({
+            url: '/Movie/Create?urlI=@Model.orig_title',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                $('#target').html(data.msg);
+            }
+            
+        });
+    }
+    
+</script>

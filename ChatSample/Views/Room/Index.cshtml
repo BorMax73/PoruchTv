@@ -155,7 +155,9 @@
 <script>
     var url = document.URL;
     var roomId = url.split('#')[1];
-    
+    var link = url.split('url=')[1].replaceAll("%2F", "/");
+
+    document.getElementById("if").src = link;
     var connection = new signalR.HubConnectionBuilder()
         .withUrl('/chat')
         .build();

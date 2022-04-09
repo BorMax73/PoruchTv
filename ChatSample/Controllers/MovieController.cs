@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
-using ChatSample.Hubs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using poruchTv.Models;
 using poruchTv.Models.API;
 using poruchTv.Models.Random;
@@ -10,26 +8,22 @@ using poruchTv.Models.Video;
 
 namespace poruchTv.Controllers
 {
-    
-    public class HomeController : Controller
+    public class MovieController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        
+        public async Task<IActionResult> Index(Content content)
         {
-            _logger = logger;
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            var content = await SearchAPI.Search();
+            if (content == null)
+                return Error();
+            
             return View(content);
         }
-        [HttpGet]
-        public IActionResult GetFilm(Content movie)
+
+        [HttpPost]
+        public IActionResult Create(string urlI)
         {
-            
-            return RedirectToAction("Index", "Movie", movie);
+            var key = Randomaiser.RandomString(6);
+            return RedirectToAction("Index", "Room", new{key= $"{key}", url = urlI });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

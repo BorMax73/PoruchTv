@@ -14,6 +14,6 @@ namespace poruchTv.Models.Video
         [field: NonSerialized]
         public string imgUrl { get; set; }
 
-        
+        public string iframe_src { get; set; }
     }
 }

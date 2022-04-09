@@ -22,12 +22,18 @@
         {
             
             <tr>
-                <td>@o.orig_title</td>
+                <td><a onclick="@Url.Action("GetFilm", o)">@o.orig_title</a></td>
                 <td><img src="@o.imgUrl"/></td>
             </tr>
         }
     </table>
 </div>
+@*<script>
+    function GetFilm()
+    {
+        location.href = "@Url.Action("GetFilm", )";
+    }
+</script>*@
     @*@for (int i = 0; i < Model.Count(); i++)
     {
         <div #="@i"/>
