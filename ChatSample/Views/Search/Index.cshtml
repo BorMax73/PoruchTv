@@ -1,0 +1,21 @@
+﻿@model IEnumerable<poruchTv.Models.Video.Content>
+@{
+    ViewData["Title"] = "Search";
+}
+
+<form method="get" action="/Search">
+    <input id="searchInput" name="name" type="text"/>
+    <input id="btn"  type="submit"/>
+</form>
+<div class="content">
+@foreach (var obj in Model)
+{
+    <a href="/Movie?id=@obj.id">
+        <div class="poster">
+            <img style="width: 150px" src="@obj.imgUrl"/>
+        </div>
+        <h3>@obj.orig_title</h3>
+        <h4>@obj.ru_title</h4>
+    </a>
+}
+</div>

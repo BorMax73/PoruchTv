@@ -1,162 +1,41 @@
 ﻿@{
     ViewData["Title"] = "SLAVA UKRAINE";
 }
-<div class="container">
-    <input type="text" id="message" />
-    <input type="button" id="sendmessage" value="Send" />
-    <input type="button" id="Sync" value="Sync"/>
-    <input type="number" id="timeI"/>
-    <ul id="discussion"></ul>
-</div>
-<div id="welcome"></div>
+
+
+<div>
+    <div  class="1">
+        <div id="first">
+            <input id="oo"/>
+            <input type="button" id="submit-btn"**>
+        </div>
+    </div>
+    <div id="main">
+        <iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" frameborder="0" allowfullscreen></iframe>
+        <div class="chat">Nav</div>
+        <aside><div class="chat"/></aside>
+        @*<iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" frameborder="0" allowfullscreen></iframe>
+        
+        <div class="chat">*@
+
+        </div>
+       
+    </div>
+
+@*<div id="welcome"></div>
 <button id="con">Connect</button>
-<iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" width="640" height="480" style="horiz-align: right; vertical-align: bottom" frameborder="0" allowfullscreen></iframe>
+*@
 <!--Script references. -->
     <!--Reference the SignalR library. -->
     <script type="text/javascript" src="lib/signalr.min.js"></script>
-    <!--Add script to update the page and send messages.-->
-    <!--<script type="text/javascript">
-        document.addEventListener('DOMContentLoaded',
-            function() {
-
-                
-                var seekMain = 2300;
-                // Start the connection.
-
-                var connection = new signalR.HubConnectionBuilder()
-                    .withUrl('/chat')
-                    .build();
-               
-                //connection.invoke("Enter", "test", name);
-                var messageInput = document.getElementById('message');
-
-                // Get the user name and store it to prepend to messages.
-                var name = prompt('Enter your name:', '');
-                // Set initial focus to message input box.
-                messageInput.focus();
-                connection.invoke("Enter", "qwe", name);
-           
-                connection.on("Notify", function (message) {
- 
-                    var elem = document.createElement("p");
-                    elem.appendChild(document.createTextNode(message));
- 
-                    var firstElem = document.getElementById("chatroom").firstChild;
-                    document.getElementById("chatroom").insertBefore(elem, firstElem);
-                });
-                //var player = new playerjs.Player(document.getElementById('if'));
-                window.addEventListener("message",
-                    function(event) {
-                        /*console.log(event.data.event + "ddddddddddddddddddddddddddddddd");*/
-                        if (event.data.event === 'time' & typeof event.data.time !== 'undefined') {
-                            seekMain = event.data.time;
-                            console.log(event.data.time);
-                        }
-                        if (event.data.event === 'seek' & typeof event.data.time !== 'undefined') {
-                            seekMain = event.data.time;
-                            console.log(event.data.time);
-                        }
-                    
-                        //if (event.data.event === 'seek' & typeof event.data.time !== 'undefined' & event.data.playing == 'false') {
-                        //    console.log("SLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-                        //    seekMain = event.data.time;
-                        //    try {
-                        //        connection.invoke("SetTime", seekMain);
-                        //        //document.getElementById("if").contentWindow.postMessage({ "api": "time","set":seekMain }, "*");
-
-                        //    } catch (err) {
-                        //        console.error(err);
-                        //    }
-                        //    console.log(event.data.time);
-                        //}
-                        if (event.data.event == 'paused') {
-                            console.log("Signal pause!");
-                            try {
-                                connection.invoke("SetTime", seekMain);
-                                connection.invoke("Pause", "pause", seekMain);
-                            } catch (err) {
-                                console.error(err);
-                            }
-
-                        }
-                        if (event.data.event == 'resumed') {
-                            console.log("Signal play!");
-                            try {
-                                //connection.invoke("Enter", "test", name);
-                                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                                console.log(seekMain);
-                                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                                connection.invoke("SetTime", seekMain);
-                                document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seekMain }, "*");
-                                connection.invoke("Play", "play", seekMain);
-                            } catch (err) {
-                                console.error(err);
-                            }
-                        }
-                    });
-                // Create a function that the hub can call to broadcast messages.
-                connection.on('Play', function (command, seek) {
-                    // Html encode display name and message.
-                    document.getElementById("if").contentWindow.postMessage({ "api": "play" }, "*");
-                    document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seek }, "*");
-
-                });
-                connection.on('SetTime', function (time) {
-
-                    document.getElementById("if").contentWindow.postMessage({ "api": "seek","set":time }, "*");
-                });
-                connection.on('Pause', function (command, time) {
-                    document.getElementById("if").contentWindow.postMessage({ "api": "pause"}, "*");
-                    document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": time }, "*");
-
-                });
-                // Transport fallback functionality is now built into start.
-                //    connection.start()
-                //        .then(function () {
-                //            var seek;
-                //            console.log('connection started');
-                //            document.getElementById('sendmessage').addEventListener('click', function (event) {
-                //                // Call the Send method on the hub.
-                        
-                        
-                //                document.getElementById("if").contentWindow.postMessage({ "api": "seek" }, "*");
-                //                connection.invoke('Play', name, seekMain);
-
-                //                // Clear text box and reset focus for next comment.
-                //                messageInput.value = '';
-                //                messageInput.focus();
-                //                event.preventDefault();
-                //            });
-                //        })
-                //        .catch(error => {
-                //            console.error(error.message);
-                //        });
-                //    connection.start()
-                //        .then(function () {
-                //            console.log('connection started');
-                //            document.getElementById('Sync').addEventListener('click', function (event) {
-                //                // Call the Send method on the hub.
-                //                var time = document.getElementById("timeI").value;
-                //                connection.invoke('SetTime', time);
-
-                //                // Clear text box and reset focus for next comment.
-                //                messageInput.value = '';
-                //                messageInput.focus();
-                //                event.preventDefault();
-                //            });
-                //        })
-                //        .catch(error => {
-                //            console.error(error.message);
-                //        });
-                //});
-            });
-    </script>-->
+<script src="jquery-3.6.0.min.js"></script>
+<script src="room.js"></script>
 <script type="text/javascript" src="//cdn.embed.ly/player-0.1.0.min.js"></script>
-<script>
+@*<script>
     var url = document.URL;
-    var roomId = url.split('#')[1];
+    var roomId = url.split('?key=')[1].split("&")[0];
     var link = url.split('url=')[1].replaceAll("%2F", "/");
-
+    
     document.getElementById("if").src = link;
     var connection = new signalR.HubConnectionBuilder()
         .withUrl('/chat')
@@ -173,7 +52,9 @@
                 seekMain = event.data.time;
                 console.log(event.data.time);
             }
-
+            if (event == 'Seeked') {
+                console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+            }
             //if (event.data.event === 'seek' & typeof event.data.time !== 'undefined' & event.data.playing == 'false') {
             //    console.log("SLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
             //    seekMain = event.data.time;
@@ -234,24 +115,48 @@
 
     });
     var name = '';
+    
     document.addEventListener('DOMContentLoaded',
         function () {
+            
             //connection.invoke("Enter", "test", name);
-            var messageInput = document.getElementById('message');
-
+            //
+            // \var messageInput = document.getElementById('message');
+            
             // Get the user name and store it to prepend to messages.
-            name = prompt('Enter your name:', '');
-            // Set initial focus to message input box.
-            messageInput.focus();
-            if (name) {
-                document.querySelector('#welcome').innerHTML = `<b>${name}</b>, добро пожаловать на сайт!`;
-                connection.invoke("Enter", roomId, name);
-            } else {
-                document.querySelector('#welcome').innerHTML = '<b>Гость</b>, добро пожаловать на сайт!';
-            }
+            //name = prompt('Enter your name:', '');
+            //// Set initial focus to message input box.
+            //document.add("a");
+            //messageInput.focus();
+            //if (name) {
+            //    connection.invoke("Enter", roomId, name);
+            //    document.querySelector('#welcome').innerHTML = `<b>${name}</b>, добро пожаловать на сайт!`;
+
+            //} else {
+            //    document.querySelector('#welcome').innerHTML = '<b>Гость</b>, добро пожаловать на сайт!';
+            //}
+
         });
-    document.getElementById("con").addEventListener("click", function (e) {
-        connection.invoke("Enter", roomId, name);
+
+  
+        
+        //name = prompt('Enter your name:', '');
+        //// Set initial focus to message input box.
+        
+        //if (name) {
+            
+        //    connection.start().then(connection.invoke("Enter", roomId, name));
+        //    //document.querySelector('#welcome').innerHTML = `<b>${name}</b>, добро пожаловать на сайт!`;
+
+        //} else {
+        //    //document.querySelector('#welcome').innerHTML = '<b>Гость</b>, добро пожаловать на сайт!';
+        //}
+
+    
+    document.getElementById("submit-btn").addEventListener("click", function (e) {
+        var name1 = document.getElementById('oo').value;
+        document.getElementById('first').visibility = "hidden";
+        connection.invoke("Enter", roomId, name1);
     });
     connection.start();
-</script>
+</script>*@

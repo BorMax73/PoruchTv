@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using ChatSample.db;
 using Microsoft.AspNetCore.Mvc;
 using poruchTv.Models;
 using poruchTv.Models.API;
@@ -10,13 +12,16 @@ namespace poruchTv.Controllers
 {
     public class MovieController : Controller
     {
-        
-        public async Task<IActionResult> Index(Content content)
+        private ApplicationContext db;
+        public MovieController(ApplicationContext context)
         {
-            if (content == null)
-                return Error();
+            db = context;
+        }
+        public async Task<IActionResult> Index(int id)
+        {
+            var result = db.contents.FirstOrDefault(x => x.id == id);
             
-            return View(content);
+            return View(result);
         }
 
         [HttpPost]

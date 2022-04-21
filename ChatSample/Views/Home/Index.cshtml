@@ -9,7 +9,7 @@
     <div class="search">
         <h1>Movie Poster Search</h1>
         <div id="fetch">
-            <input type="text" placeholder="enter movie title here" id="term" />
+            <input type="text" placeholder="enter movie ru_title here" id="term" />
             <button id="search">Find</button>
         </div>
         <div id="poster">
@@ -18,16 +18,28 @@
 </div>
 <div>
     <table>
-        @foreach (var o in Model)
+        @* @foreach (var o in Model)
         {
             
             <tr>
-                <td><a onclick="@Url.Action("GetFilm", o)">@o.orig_title</a></td>
+                <a src="/Home/GetFilm?url=@o.orig_ru_title"onclick="@Url.Action("GetFilm", o)">@o.orig_ru_title</a>
                 <td><img src="@o.imgUrl"/></td>
             </tr>
-        }
+        }*@
     </table>
 </div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9595731160145415"
+        crossorigin="anonymous"></script>
+<!-- test1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9595731160145415"
+     data-ad-slot="1023472289"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 @*<script>
     function GetFilm()
     {
@@ -82,7 +94,11 @@
             return false;
         }
 
-        $('#search').click(getPoster);
+        $('#search').click(function() {
+            getPoster();
+            console.log("Aa");
+            @Url.Action("Search", "Home", new {name = "qwe", page = 1})
+        });
         $('#term').keyup(function(event){
             if(event.keyCode == 13){
                 getPoster();

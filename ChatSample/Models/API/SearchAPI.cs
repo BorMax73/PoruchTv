@@ -10,6 +10,7 @@ using System.Text.Json;
 using Json.Net;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ChatSample.db;
 using Newtonsoft.Json;
 using poruchTv.Models.API.imdb;
 using poruchTv.Models.Video;
@@ -29,56 +30,67 @@ namespace poruchTv.Models.API
             ""isAssigneeTypeValid"": false,
             ""project"": ""TP""}";
 
-        public static async Task<List<Content>> Search()
+        public static async Task<List<Content>> Search(ApplicationContext db, int page)
         {
             try
             {
-                //for(int i = 1; i < 3580; i++)
-                //{
-                string url = "https://api.imgbb.com/1/upload?key=0b339a62a2f5d568378183f74cde6f07&image=";
-                    HttpResponseMessage response = await client.GetAsync($"https://videocdn.tv/api/short?api_token=WwashE4xCvKmEQjBktjGAIngTQL1R0Bp&page=1&limit=30");
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    // Above three lines can be replaced with new helper method below
-                    // string responseBody = await client.GetStringAsync(uri);
-                    var k = JsonConvert.DeserializeObject<ResultApi>(responseBody);
-                    int count = 0;
-                    List<Content> result = new List<Content>();
-                    foreach (Content b in k.data)
+                List<Content> result = new List<Content>();
+
+                    for (int i = 1; i < 3; i++)
                     {
-                        if (b.kp_id != null)
+                        HttpResponseMessage response = await client.GetAsync(
+                            $"https://videocdn.tv/api/movies?api_token=WwashE4xCvKmEQjBktjGAIngTQL1R0Bp&page={page}&limit=100");
+                        response.EnsureSuccessStatusCode();
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var k = JsonConvert.DeserializeObject<ResultApi>(responseBody);
+                        
+                        foreach (Content b in k.data)
                         {
-
-                            var res = await client.GetAsync(
-                                "https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=" + b.orig_title);
-                            if (res != null)
+                            if (b.imdb_id != null)
                             {
-                               var json =   await res.Content.ReadAsStringAsync();
-                               var obj = JsonConvert.DeserializeObject<SearchData>(json);
-                               if (obj.results.Count > 0)
-                               {
-                                   var sort = obj.results.FirstOrDefault(x => !String.IsNullOrEmpty(b.year) && !String.IsNullOrEmpty(x.release_date) && x.release_date.Substring(0, 4) == b.year.Substring(0,4));
-                                   if (sort != null) b.imgUrl = "https://image.tmdb.org/t/p/w500" + sort.poster_path;
-                               }
-                               
 
-                            } //Debug.WriteLine(b.id);
+                                var res = await client.GetAsync(
+                                    "https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=" +
+                                    b.orig_title);
+                                if (res != null)
+                                {
+                                    var json = await res.Content.ReadAsStringAsync();
+                                    var obj = JsonConvert.DeserializeObject<SearchData>(json);
+                                    if (obj.results.Count > 0)
+                                    {
+                                        var sort = obj.results.FirstOrDefault(x =>
+                                            !String.IsNullOrEmpty(b.year) && !String.IsNullOrEmpty(x.release_date) &&
+                                            x.release_date.Substring(0, 4) == b.year.Substring(0, 4));
+                                        if (sort != null)
+                                        {
+                                            b.imgUrl = "https://image.tmdb.org/t/p/w500" + sort.poster_path;
+                                            b.overview = sort.overview;
+                                            b.popularity = sort.popularity;
+                                        }
+                                    }
 
-                            //var B = await webclient.DownloadDataTaskAsync(new Uri($"http://st.kinopoisk.ru/images/film_big/{b.kp_id}.jpg"));
-                            //                              //HttpResponseMessage response2 = await client.GetAsync(url + $"http://st.kinopoisk.ru/images/film_big/{b.kp_id}.jpg");
-                            //                              //response2.EnsureSuccessStatusCode();
-                            //                              //string responseBody2 = await response2.Content.ReadAsStringAsync();
-                            //                              //var data = JsonConvert.DeserializeObject<SearchData>(responseBody2);
-                            //b.imgUrl = B;
-                            result.Add(b);
-                            count++;
+
+                                } //Debug.WriteLine(b.id);
+
+                                //var B = await webclient.DownloadDataTaskAsync(new Uri($"http://st.kinopoisk.ru/images/film_big/{b.kp_id}.jpg"));
+                                //                              //HttpResponseMessage response2 = await client.GetAsync(url + $"http://st.kinopoisk.ru/images/film_big/{b.kp_id}.jpg");
+                                //                              //response2.EnsureSuccessStatusCode();
+                                //                              //string responseBody2 = await response2.Content.ReadAsStringAsync();
+                                //                              //var data = JsonConvert.DeserializeObject<SearchData>(responseBody2);
+                                //b.imgUrl = B;
+                                result.Add(b);
+                                Debug.Write($"WORK{i}");
+                            }
+
+
                         }
-
 
                     }
 
-
-                    return result;
+                    await db.contents.AddRangeAsync(result);
+                    await db.SaveChangesAsync();
+                    Debug.Write("FINAL");
+                    return null;
 
 
             }

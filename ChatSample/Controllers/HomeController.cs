@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 using ChatSample.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using poruchTv.Models;
 using poruchTv.Models.API;
 using poruchTv.Models.Random;
@@ -22,9 +24,16 @@ namespace poruchTv.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var content = await SearchAPI.Search();
-            return View(content);
+            
+            return View();
         }
+        //[HttpGet]
+        //public async Task<IActionResult> Search(string name, int page =1)
+        //{
+        //    var content = await SearchAPI.Search(name,page);
+
+        //    return View("Index",content);
+        //}
         [HttpGet]
         public IActionResult GetFilm(Content movie)
         {

@@ -26,6 +26,16 @@ namespace ChatSample.Hubs
                 await Clients.Group(roomId).SendAsync("Notify", $"{username} вошел в чат");
             }
         }
+
+        public async Task Leave(string roomId, string username)
+        {
+            if (!String.IsNullOrEmpty(roomId) && !String.IsNullOrEmpty(username))
+            {
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);
+                await Clients.Group(roomId).SendAsync("Notify", $"{username}");
+                
+            }
+        }
         //public async Task AddToGroup(string groupName)
         //{
         //    await Groups.AddToGroupAsync(Context.ConnectionId, groupName);

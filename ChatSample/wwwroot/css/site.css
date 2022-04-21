@@ -1,79 +1,78 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    margin: 0;
+    font-family: Inter;
+    background-color: #ECECEC;
 }
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+.nav {
+    display: flex;
+    list-style-type: none;
+    flex-flow: nowrap;
+    justify-content: space-between;
 }
-tr:hover {
-    background: red;
-}
-
-td a {
+section {
     display: block;
-    border: 1px solid black;
-    padding: 16px;
 }
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+/*iframe {
+    display: flex;
+    position:absolute;
+    width: 70%;
+    height: 803px;
+    left: 0px;
+    top: 221px;
+}*/
+.chat {
+    /*display: flex;
+    position: absolute;
+   width: 25%;
+    height: 803px;
+    left: 1350px;
+    top: 209px;*/
+    background: #D4EBF9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 35px;
 }
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+#main {
+    flex-wrap: wrap;
+    display: flex;
+    flex: 1;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+#main > iframe {
+    height: 800px;
+    flex: 1;
+    order: 1;
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+#main > div,
+
+
+#main > div {
+    flex: 0 0 450px;
+    order: 2;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+.header-panel {
+    /*width: 1920px;*/
+    height: 139px;
+    left: 0px;
+    top: 0px;
+    background: #67C0FF;
+}
+footer {
+    display: flex;
+    justify-content: space-between;
+    color: #828282;
+    padding: 26px 0;
+    font-size: 12px;
 }

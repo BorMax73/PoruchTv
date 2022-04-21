@@ -4,7 +4,7 @@
 }
 <div>
     <img src="@Model.imgUrl"/>
-    <h2>@Model.title</h2>
+    <h2>@Model.ru_title</h2>
     <p>@Model.year</p>
     <form method="post" action="/Movie/Create?urlI=@Model.iframe_src">
         <input type="hidden" value="@Model.imgUrl" name="PhoneId" />
