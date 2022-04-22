@@ -10,15 +10,35 @@
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/header.css"/>
+    <link rel="stylesheet" href="css/reset.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="header-panel">
-            <form method="get" action="/Search">
+    <header class="header">
+        <div class="container">
+            <div class="header-row">
+                <div class="header-logo"><a href="/Home"><img src="source/logo/logo-min.svg" alt="Logo"/></a></div>
+                <nav class="header-nav">
+                    <ul>
+                        <li><a href="#">Прем'єри</a></li>
+                        <li><a href="#">Фільми</a></li>
+                        <li><a href="#">Серіали</a></li>
+                        <li><a href="#">Підбірки</a></li>
+                    </ul>
+                </nav>
+                <div class="header-search">
+                    <form method="get" action="/Search">
+                        <input id="searchInput" minlength="3" name="name" type="text"/>
+                        <input id="btn" src="source/search.svg" type="image"/>
+                    </form>
+                </div>
+                <div class="header-login"><a><img src="source/login.svg"/></a></div>
+            </div>
+           @* <form method="get" action="/Search">
                 <input id="searchInput" name="name" type="text"/>
-                <input id="btn"  type="submit"/>
-            </form>
+                <input id="btn" type="submit"/>
+            </form>*@
         </div>
     </header>
     
