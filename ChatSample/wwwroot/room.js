@@ -1,15 +1,57 @@
-﻿var url = document.URL;
-var roomId = url.split('?key=')[1].split("&")[0];
-var link = url.split('url=')[1].replaceAll("%2F", "/");
-var isPlay = false;
-document.getElementById("if").src = link;
+﻿var url;
+var name;
+var roomId;
+var link;
+var isPlay;
+var seekMain; 
+
+async function setSettings() {
+    url = document.URL;
+    name = "";
+    roomId = url.split('?key=')[1].split("&")[0];
+    link = url.split('url=')[1].replaceAll("%2F", "/");
+    isPlay = false;
+    seekMain = 0;
+    document.getElementById("if").src = link;
+}
+
+setSettings();
 var connection = new signalR.HubConnectionBuilder()
     .withUrl('/chat')
     .build();
-var seekMain = 0;
+async function start() {
+    try {
+        await connection.start();
+        do {
+            input = prompt("Введіть ім'я");
+        } while (input == null || input == "");
+        name = input;
+        Enter();
+        console.log("SignalR Connected.");
+        //var isEntered = false;
+        //while (isEntered === false) {
+        //    var input = prompt("Вкажіть ваше ім'я");
+        //    if (input.length > 0) {
+        //        isEntered = true;
+        //        name = input;
+        //        Enter();
+        //    }
+
+        //}
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+connection.onclose(async () => {
+    await start();
+});
+start();
+
+
 window.addEventListener("message",
     function (event) {
-        /*console.log(event.data.event + "ddddddddddddddddddddddddddddddd");*/
         if (event.data.event === 'time' & typeof event.data.time !== 'undefined') {
             seekMain = event.data.time;
             console.log(event.data.time);
@@ -18,22 +60,8 @@ window.addEventListener("message",
             seekMain = event.data.time;
             console.log(event.data.time);
         }
-        if (event == 'Seeked') {
-            console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-        }
-        //if (event.data.event === 'seek' & typeof event.data.time !== 'undefined' & event.data.playing == 'false') {
-        //    console.log("SLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-        //    seekMain = event.data.time;
-        //    try {
-        //        connection.invoke("SetTime", seekMain);
-        //        //document.getElementById("if").contentWindow.postMessage({ "api": "time","set":seekMain }, "*");
 
-        //    } catch (err) {
-        //        console.error(err);
-        //    }
-        //    console.log(event.data.time);
-        //}
-        var err;
+        
         if (event.data.event == 'paused') {
             console.log("Signal pause!");
             try {
@@ -79,31 +107,57 @@ connection.on('SetTime', function (command, time) {
 
     document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": time }, "*");
 });
+
 connection.on('Pause', function (command, time) {
     seekMain = time;
     document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": time }, "*");
     document.getElementById("if").contentWindow.postMessage({ "api": "pause" }, "*");
 
 });
-var name = '';
+connection.on('Send', function (message, username) {
 
-document.addEventListener('DOMContentLoaded',
-    function () {
+    // создаем элемент <b> для имени пользователя
+    let userNameElem = document.createElement("b");
+    userNameElem.appendChild(document.createTextNode(username + ': '));
 
-       
+    // создает элемент <p> для сообщения пользователя
+    let elem = document.createElement("p");
+    elem.appendChild(userNameElem);
+    elem.appendChild(document.createTextNode(message));
 
-    });
+    var firstElem = document.getElementById("chat").firstChild;
+    document.getElementById("chat").insertBefore(elem, firstElem);
 
+});
+connection.on('Notify', function (Users) {
+    //var users = Object.entries(Users);
+    document.getElementById("users").innerHTML = "";
+    for (const [key, value] of Object.entries(Users)) {
+        let user = document.createElement("div");
+        user.appendChild(document.createTextNode(`${key}`));
+        var firstElem = document.getElementById("users").firstChild;
+        document.getElementById("users").insertBefore(user, firstElem);
+        console.log(`${key}: ${value}`);
+    }
+});    
 
+async function Enter() {
+   await connection.invoke("Enter", roomId, name, seekMain);
+}
 
 window.addEventListener('beforeunload', function (event) {
     
-    connection.invoke("Leave", roomId, "name1");
+    connection.invoke("Leave", roomId, name);
 }, false);
-
-document.getElementById("submit-btn").addEventListener("click", function (e) {
-    var name1 = document.getElementById('oo').value;
-    document.getElementById('first').visibility = "hidden";
-    connection.invoke("Enter", roomId, name1);
+document.getElementById("sendBtn").addEventListener("click", function (e) {
+    let message = document.getElementById("message").value;
+    connection.invoke("Send", message, roomId, name);
+    document.getElementById("message").value = "";
+    // сonnection.invoke("Send", message, roomId, name);
 });
-connection.start();
+document.getElementById("submit-btn").addEventListener("click", function (e) {
+    name = document.getElementById('oo').value;
+    document.getElementById('first').visibility = "hidden";
+    connection.invoke("Enter", roomId, name);
+});
+//connection.start();

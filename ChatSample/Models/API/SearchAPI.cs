@@ -10,8 +10,8 @@ using System.Text.Json;
 using Json.Net;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ChatSample.db;
 using Newtonsoft.Json;
+using poruchTv.Data;
 using poruchTv.Models.API.imdb;
 using poruchTv.Models.Video;
 using JsonConverter = System.Text.Json.Serialization.JsonConverter;
@@ -30,7 +30,7 @@ namespace poruchTv.Models.API
             ""isAssigneeTypeValid"": false,
             ""project"": ""TP""}";
 
-        public static async Task<List<Content>> Search(ApplicationContext db, int page)
+        public static async Task<List<Content>> Search(UserContext db, int page)
         {
             try
             {

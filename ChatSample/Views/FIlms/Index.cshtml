@@ -1,0 +1,57 @@
+﻿@model poruchTv.Models.PaginatedList<poruchTv.Models.Video.Content>
+@{
+    ViewData["Title"] = "Films";
+}
+
+<div class="content">
+    <div class="results">
+        @foreach (var obj in Model)
+        {
+            <a href="/Movie?id=@obj.id">
+                <div class="poster">
+                    <img class="poster" src="@obj.imgUrl"/>
+                </div>
+                <h3>@obj.orig_title</h3>
+                <h4>@obj.ru_title</h4>
+            </a>
+        }
+    </div>
+    <div class="filters">
+        <form>
+            <div>
+                <h3>Рік</h3>
+                <p>Від</p>
+                <input type="number"/>
+                <p>До</p>
+                <input type="number"/>
+            </div>
+            <div>
+                <h3>Рейтинг</h3>
+                <p>Від</p>
+                <input type="number"/>
+                <p>До</p>
+                <input type="number"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

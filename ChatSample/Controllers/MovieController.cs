@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ChatSample.db;
+
 using Microsoft.AspNetCore.Mvc;
+using poruchTv.Data;
 using poruchTv.Models;
 using poruchTv.Models.API;
 using poruchTv.Models.Random;
@@ -12,8 +13,8 @@ namespace poruchTv.Controllers
 {
     public class MovieController : Controller
     {
-        private ApplicationContext db;
-        public MovieController(ApplicationContext context)
+        private UserContext db;
+        public MovieController(UserContext context)
         {
             db = context;
         }

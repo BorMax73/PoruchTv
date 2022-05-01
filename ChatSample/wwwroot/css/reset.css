@@ -45,12 +45,7 @@ ul {
 	list-style: none;
 }
 
-img, svg {
-	vertical-align: top;
-	max-width: 100%;
-    min-width: 70%;
-	height: auto;
-}
+
 
 /* Form */
 

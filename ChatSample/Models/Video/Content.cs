@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,12 +19,17 @@ namespace poruchTv.Models.Video
 
         [field: NonSerialized]
         public string imgUrl { get; set; }
-
+        
         public string iframe_src { get; set; }
         public string content_type { get; set; }
         [field: NonSerialized]
         public string overview { get; set; }
         [field: NonSerialized]
-        public string popularity { get; set; }
+        public double popularity { get; set; }
+        [field: NonSerialized]
+        public double vote_average { get; set; }
+        [field: NonSerialized]
+        public string genre_ids { get; set; }
+
     }
 }

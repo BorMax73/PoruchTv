@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9595731160145415"
@@ -10,19 +14,20 @@
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="css/header.css"/>
-    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="@Url.Content("~/css/header.css")"/>
+    <link rel="stylesheet" href="@Url.Content("~/css/reset.css")"/>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <div class="container">
             <div class="header-row">
-                <div class="header-logo"><a href="/Home"><img src="source/logo/logo-min.svg" alt="Logo"/></a></div>
+                <div class="header-logo"><a href="/Home"><img src=@Url.Content("~/source/logo/logo-min.svg") alt="Logo"/></a></div>
                 <nav class="header-nav">
                     <ul>
                         <li><a href="#">Прем'єри</a></li>
-                        <li><a href="#">Фільми</a></li>
+                        <li><a href="/Films">Фільми</a></li>
                         <li><a href="#">Серіали</a></li>
                         <li><a href="#">Підбірки</a></li>
                     </ul>
@@ -30,10 +35,36 @@
                 <div class="header-search">
                     <form method="get" action="/Search">
                         <input id="searchInput" minlength="3" name="name" type="text"/>
-                        <input id="btn" src="source/search.svg" type="image"/>
+                        <input id="btn" src=@Url.Content("~/source/search.svg") type="image"/>
                     </form>
                 </div>
-                <div class="header-login"><a><img src="source/login.svg"/></a></div>
+                <div class="header-login">
+                    <partial name="_LoginPartial"/>
+                    @*<a>
+                        <ul class="navbar-nav">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+                                </li>
+                                <li class="nav-item">
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
+                                        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                </li>
+                            }
+                        </ul>
+                    </a>*@
+                </div>
             </div>
            @* <form method="get" action="/Search">
                 <input id="searchInput" name="name" type="text"/>
@@ -45,7 +76,7 @@
  
         @RenderBody()
    
-
+@*
     <script>
         document.getElementById("btn").addEventListener("click",
             function(e) {
@@ -53,7 +84,7 @@
                 console.log("Aa");
                 @Url.Action("Search", "Home", new {name = "qwe", page = 1})
             });
-    </script>
+    </script>*@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - Customs - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

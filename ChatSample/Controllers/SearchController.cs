@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
-using ChatSample.db;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using poruchTv.Data;
+using poruchTv.Models;
 using poruchTv.Models.API;
 using poruchTv.Models.API.imdb;
 using poruchTv.Models.Video;
@@ -16,26 +18,25 @@ namespace poruchTv.Controllers
 {
     public class SearchController : Controller
     {
-        private ApplicationContext db;
-        public SearchController(ApplicationContext context)
+        private UserContext db;
+        public SearchController(UserContext context)
         {
             db = context;
         }
 
-        public async Task<IActionResult> Index(string name)
+        public async Task<IActionResult> Index(string name, int pageNumber = 1)
         {
+            ViewData["name"] = name;
             if (String.IsNullOrEmpty(name))
             {
                 return BadRequest();
 
             }
 
-            var enQueryable = await db.contents.Where(x => EF.Functions.Like(x.orig_title, $"%{name}%")).OrderBy(x => x.popularity).ToListAsync();
-            var ruQueryable = await db.contents.Where(x => EF.Functions.Like(x.ru_title, $"%{name}%")).OrderBy(x => x.popularity).ToListAsync();
-            var result = new List<Content>() { };
-            result.AddRange(enQueryable);
-            result.AddRange(ruQueryable);
-            return View(result);
+            var queryable = db.contents.Where(x => EF.Functions.Like(x.orig_title, $"%{name}%") || EF.Functions.Like(x.ru_title, $"%{name}%"));
+            //var ruQueryable = db.contents.Where(x => EF.Functions.Like(x.ru_title, $"%{name}%"));
+            var result = queryable.OrderByDescending(x => x.popularity);
+            return View(await PaginatedList<Content>.CreateAsync(result, pageNumber, 15));
         }
         //public async Task<IActionResult> Index(string name, int page = 1)
         //{
@@ -45,10 +46,10 @@ namespace poruchTv.Controllers
         //        HttpClient client = new HttpClient();
         //        List<Content> result = new List<Content>();
 
-        //        for (int i = 200; i < 300; i++)
+        //        for (int i = 1; i < 5; i++)
         //        {
         //            HttpResponseMessage response = await client.GetAsync(
-        //                $"https://videocdn.tv/api/movies?api_token=WwashE4xCvKmEQjBktjGAIngTQL1R0Bp&page={i}&limit=100");
+        //                $"https://videocdn.tv/api/tv-series?api_token=WwashE4xCvKmEQjBktjGAIngTQL1R0Bp&page={i}&limit=100");
         //            response.EnsureSuccessStatusCode();
         //            string responseBody = await response.Content.ReadAsStringAsync();
         //            var k = JsonConvert.DeserializeObject<ResultApi>(responseBody);
@@ -60,8 +61,8 @@ namespace poruchTv.Controllers
 
 
         //                    var res = await client.GetAsync(
-        //                        "https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=" +
-        //                        b.orig_title);
+        //                        $"https://api.themoviedb.org/3/find/{b.imdb_id}?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=" +
+        //                        "&language=uk" + "&external_source=imdb_id");
         //                    if (res != null)
         //                    {
         //                        var json = await res.Content.ReadAsStringAsync();
@@ -77,18 +78,14 @@ namespace poruchTv.Controllers
         //                                b.imgUrl = "https://image.tmdb.org/t/p/w500" + sort.poster_path;
         //                                b.overview = sort.overview;
         //                                b.popularity = sort.popularity;
+        //                                b.genre_ids = String.Join(',', sort.genre_ids);
+        //                                b.vote_average = sort.vote_average;
+
         //                            }
         //                        }
 
 
-        //                    } //Debug.WriteLine(b.id);
-
-        //                    //var B = await webclient.DownloadDataTaskAsync(new Uri($"http://st.kinopoisk.ru/images/film_big/{b.kp_id}.jpg"));
-        //                    //                              //HttpResponseMessage response2 = await client.GetAsync(url + $"http://st.kinopoisk.ru/images/film_big/{b.kp_id}.jpg");
-        //                    //                              //response2.EnsureSuccessStatusCode();
-        //                    //                              //string responseBody2 = await response2.Content.ReadAsStringAsync();
-        //                    //                              //var data = JsonConvert.DeserializeObject<SearchData>(responseBody2);
-        //                    //b.imgUrl = B;
+        //                    } 
         //                    b.id = 0;
         //                    result.Add(b);
         //                    Debug.Write($"WORK{i}");
@@ -103,8 +100,8 @@ namespace poruchTv.Controllers
         //        db.contents.AddRange(result);
         //        db.SaveChanges();
         //        Debug.Write("FINAL");
-        //        return null;
 
+        //        return null;
 
         //    }
         //    catch (HttpRequestException e)
@@ -112,7 +109,9 @@ namespace poruchTv.Controllers
         //        Debug.WriteLine("\nException Caught!");
         //        Debug.WriteLine("Message :{0} ", e.Message);
         //        return null;
+
         //    }
+
 
         //}
 

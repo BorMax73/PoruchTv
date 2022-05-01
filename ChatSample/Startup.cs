@@ -1,13 +1,18 @@
 ﻿using System.Net;
-using ChatSample.db;
+
 using ChatSample.Hubs;
+using Customs.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using poruchTv.Areas.Identity.Data;
+using poruchTv.Data;
 
 namespace ChatSample
 {
@@ -26,17 +31,19 @@ namespace ChatSample
             {
                 options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
             });
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            // добавляем контекст ApplicationContext в качестве сервиса в приложение
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connection));
+            
+            //services.AddDbContext<UserContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            //    .AddEntityFrameworkStores<UserContext>();
             services.AddSignalR(options =>
             {
                 options.EnableDetailedErrors = true;
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
-            
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +70,8 @@ namespace ChatSample
             app.UseFileServer();
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapHub<ChatHub>("/chat");
