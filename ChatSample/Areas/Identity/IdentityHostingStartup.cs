@@ -15,6 +15,7 @@ namespace poruchTv.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
+            
             builder.ConfigureServices((context, services) =>
             {
                 services.AddDbContext<UserContext>(options =>
@@ -23,7 +24,6 @@ namespace poruchTv.Areas.Identity
 
                 services.AddDefaultIdentity<User>(options =>
                     {
-                        
                         options.SignIn.RequireConfirmedAccount = true;
                         options.Password.RequireUppercase = false;
                         options.Password.RequireDigit = true;

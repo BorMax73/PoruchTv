@@ -3,7 +3,8 @@ var name;
 var roomId;
 var link;
 var isPlay;
-var seekMain; 
+var seekMain;
+
 
 async function setSettings() {
     url = document.URL;
@@ -22,10 +23,14 @@ var connection = new signalR.HubConnectionBuilder()
 async function start() {
     try {
         await connection.start();
-        do {
-            input = prompt("Введіть ім'я");
-        } while (input == null || input == "");
-        name = input;
+        name = document.getElementById("userName").innerText;
+        if (name === "") {
+            do {
+                input = prompt("Введіть ім'я");
+            } while (input == null || input == "");
+            name = input;
+        }
+
         Enter();
         console.log("SignalR Connected.");
         //var isEntered = false;
