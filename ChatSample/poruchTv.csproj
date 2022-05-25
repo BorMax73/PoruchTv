@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>38aed83b-df22-4e2d-b87e-e9443f4614c6</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	  <DockerfileRunArguments>-v "$(AppData)/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro"</DockerfileRunArguments>
+	  <DockerfileRunArguments>-v "$(APPDATA))/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro"</DockerfileRunArguments>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,10 +26,10 @@
 
   <ItemGroup>
     <Folder Include="db\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Models\API\imdb\" />
     <Folder Include="Models\Random\" />
     <Folder Include="Models\Video\" />
+    <Folder Include="Models\Rooms\" />
   </ItemGroup>
 
   <ItemGroup>

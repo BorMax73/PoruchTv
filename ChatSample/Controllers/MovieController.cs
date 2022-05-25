@@ -28,7 +28,7 @@ namespace poruchTv.Controllers
         [HttpPost]
         public IActionResult Create(string urlI)
         {
-            var key = Randomaiser.RandomString(6);
+            var key = Randomaiser.RandomString(10);
             return RedirectToAction("Index", "Room", new{key= $"{key}", url = urlI });
         }
 

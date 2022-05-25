@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using poruchTv.Areas.Identity.Data;
 using poruchTv.Models;
+using poruchTv.Models.Rooms;
 using poruchTv.Models.Video;
 
 namespace poruchTv.Data
@@ -15,6 +16,8 @@ namespace poruchTv.Data
     {
         public DbSet<Content> contents { get; set; }
         public DbSet<History> Histories { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<UserSession> UserSessions { get; set; }
         public UserContext(DbContextOptions<UserContext> options)
             : base(options)
         {

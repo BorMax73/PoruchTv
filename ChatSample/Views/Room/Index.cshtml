@@ -5,10 +5,10 @@
 
 <div>
     <div  class="1">
-        <div id="first">
+       @* <div id="first">
             <input id="oo"/>
             <input type="button" style="width: 100px" id="submit-btn"**/>
-        </div>
+        </div>*@
     </div>
     <div id="main">
         <iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" frameborder="0" allowfullscreen></iframe>
@@ -31,7 +31,7 @@
     </div>
        
     </div>
-    <p  id="userName">@Context.User.Identities.FirstOrDefault()?.Name</p>
+    <p style="opacity: 0" id="userName">@Context.User.Identities.FirstOrDefault()?.Name</p>
 
     <script type="text/javascript" src="lib/signalr.min.js"></script>
 <script src="jquery-3.6.0.min.js"></script>

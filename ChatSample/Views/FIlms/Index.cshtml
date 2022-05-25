@@ -1,6 +1,10 @@
-﻿@model poruchTv.Models.PaginatedList<poruchTv.Models.Video.Content>
+﻿@using poruchTv.Controllers
+@using poruchTv.Models.Video
+@model poruchTv.Models.PaginatedList<poruchTv.Models.Video.Content>
+
 @{
     ViewData["Title"] = "Films";
+    
 }
 
 <div class="content">
@@ -17,21 +21,69 @@
         }
     </div>
     <div class="filters">
-        <form>
+        <form method="get" asp-action="GetFilms">
+            @{
+                Genres input = new Genres();
+            }
             <div>
                 <h3>Рік</h3>
                 <p>Від</p>
-                <input type="number"/>
+                <input type="number" value="@ViewData["yearStart"]" name="yearStart"/>
                 <p>До</p>
-                <input type="number"/>
+                <input type="number" value="@ViewData["yearEnd"]" name="yearEnd"/>
             </div>
             <div>
                 <h3>Рейтинг</h3>
                 <p>Від</p>
-                <input type="number"/>
+                <input type="number" value="@ViewData["rattingLow"]" name="rattingLow"/>
                 <p>До</p>
-                <input type="number"/>
+                <input type="number" value="@ViewData["rattingHigh"]" name="rattingHigh"/>
             </div>
+            <div>
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[28])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[12])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[16])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[35])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[80])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[99])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[18])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[10751])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[14])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[36])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[27])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[10402])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[9648])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[10749])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[878])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[10770])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[53])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[10752])
+                <p>Action</p>
+                @Html.CheckBoxFor(x=>input.GenresInput[37])
+            </div>
+            <div>
+                <input type="checkbox"/>
+            </div>
+            @Html.EditorFor(x=>input)
+            <input type="submit"/>
         </form>
     </div>
 </div>
@@ -41,14 +93,24 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-<a asp-action="Index"
+<a asp-action="GetFilms"
+   asp-route-yearStart="@ViewData["yearStart"]"
+   asp-route-yearEnd="@ViewData["yearEnd"]"
+   asp-route-rattingLow="@ViewData["rattingLow"]"
+   asp-route-rattingHigh="@ViewData["rattingHigh"]"
+
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @prevDisabled">
     Previous
 </a>
-<a asp-action="Index"
+
+<a asp-action="GetFilms"
+   asp-route-yearStart="@ViewData["yearStart"]"
+   asp-route-yearEnd="@ViewData["yearEnd"]"
+   asp-route-rattingLow="@ViewData["rattingLow"]"
+   asp-route-rattingHigh="@ViewData["rattingHigh"]"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"

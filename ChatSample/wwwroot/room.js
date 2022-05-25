@@ -137,17 +137,23 @@ connection.on('Send', function (message, username) {
 connection.on('Notify', function (Users) {
     //var users = Object.entries(Users);
     document.getElementById("users").innerHTML = "";
-    for (const [key, value] of Object.entries(Users)) {
+    for (var i = 0; i < Users.length; i++) {
         let user = document.createElement("div");
-        user.appendChild(document.createTextNode(`${key}`));
+        user.appendChild(document.createTextNode(Users[i]));
         var firstElem = document.getElementById("users").firstChild;
         document.getElementById("users").insertBefore(user, firstElem);
-        console.log(`${key}: ${value}`);
     }
+    //for (const [key, value] of Object.entries(Users)) {
+    //    let user = document.createElement("div");
+    //    user.appendChild(document.createTextNode(`${key}`));
+    //    var firstElem = document.getElementById("users").firstChild;
+    //    document.getElementById("users").insertBefore(user, firstElem);
+    //    console.log(`${key}: ${value}`);
+    //}
 });    
 
 async function Enter() {
-   await connection.invoke("Enter", roomId, name, seekMain);
+   await connection.invoke("Enter", roomId, name, seekMain, link);
 }
 
 window.addEventListener('beforeunload', function (event) {

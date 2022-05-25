@@ -3,8 +3,10 @@ using System.Collections.Concurrent;
 using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using poruchTv.Areas.Identity.Data;
 using poruchTv.Data;
+using poruchTv.Models.Rooms;
 
 namespace ChatSample.Hubs
 {
@@ -18,18 +20,28 @@ namespace ChatSample.Hubs
         }
         internal static ConcurrentDictionary<string, double> Users = new ConcurrentDictionary<string, double>();
       
-        public async Task Enter(string roomId, string username, double seek)
+        public async Task Enter(string roomId, string username, double seek, string link)
         {
-           var connectionId=  Context.ConnectionId;
+            
             if (String.IsNullOrEmpty(username))
             {
                 await Clients.Caller.SendAsync("Notify", "Для входа в чат введите логин");
             }
             else
             {
+                var room = await db.Rooms.FirstOrDefaultAsync(x => x.Name == roomId);
+                if (room == null)
+                {
+                    await db.Rooms.AddAsync(new Room() { Created = DateTime.Now, Name = roomId, FilmUrl = link });
+                    await db.SaveChangesAsync();
+                }
+                var connectionId = Context.ConnectionId;
+                await db.UserSessions.AddAsync(new UserSession() { Name = username, RoomId = roomId, SessionId = connectionId });
+                await db.SaveChangesAsync();
                 await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
                 Users.TryAdd(username, seek);
-                await Clients.Group(roomId).SendAsync("Notify", Users);
+                var users = await db.UserSessions.Where(x => x.RoomId == roomId).Select(x => x.Name).ToListAsync();
+                await Clients.Group(roomId).SendAsync("Notify", users);
             }
         }
         public override async Task OnConnectedAsync()
@@ -39,7 +51,16 @@ namespace ChatSample.Hubs
         }
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
+            var user = await db.UserSessions.FirstOrDefaultAsync(x => x.SessionId == Context.ConnectionId);
+            if (user != null) db.UserSessions.Remove(user);
+            await db.SaveChangesAsync();
+            if (user != null)
+            {
+                await Groups.RemoveFromGroupAsync(user.RoomId, "SignalR Users");
+                var users = await db.UserSessions.Where(x => x.RoomId == user.RoomId).Select(x => x.Name).ToListAsync();
+                await Clients.Group(user.RoomId).SendAsync("Notify", users);
+            }
+
             await base.OnDisconnectedAsync(exception);
         }
        

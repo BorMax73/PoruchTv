@@ -40,6 +40,7 @@ namespace ChatSample
             {
                 options.EnableDetailedErrors = true;
             });
+            
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddTransient<IEmailSender, EmailSender>();
