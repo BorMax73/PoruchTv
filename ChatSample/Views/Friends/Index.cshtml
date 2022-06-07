@@ -1,0 +1,27 @@
+﻿@model poruchTv.Models.FriendsPage
+@{
+    ViewData["Title"] = "Friends";
+}
+<form method="get"  asp-action="SearchUsers" >
+    <input id="searchInput" minlength="2" name="name" type="text"/>
+    <input id="btn" type="submit"/>
+</form>
+@if(Model.Friendships != null){
+    @foreach (var friend in Model.Friendships)
+    {
+        <a href="/user?name=@friend.FirstUserName">@friend.FirstUserName</a>
+        <form method="post" asp-action="AcceptFriend">
+            <input type="hidden" value="@friend.Id" name="id"/>
+            <input type="submit"/>
+        </form>
+        <form method="post" asp-action="DeleteFriend">
+            <input type="hidden" value="@friend.Id" name="id"/>
+            <input value="x" type="submit"/>
+        </form>
+    }
+}
+
+@foreach (var user in Model.FriendNames)
+{
+    <a href="/user?name=@user">@user</a>
+}

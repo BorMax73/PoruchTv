@@ -22,10 +22,10 @@ namespace poruchTv.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        public Task<IActionResult> Index()
         {
             
-            return View();
+            return Task.FromResult<IActionResult>(View());
         }
         //[HttpGet]
         //public async Task<IActionResult> Search(string name, int page =1)

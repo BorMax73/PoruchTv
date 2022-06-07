@@ -1,0 +1,13 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div>
+    @foreach (var user in Model)
+    {
+        <a href="/user?name=@user.UserName">@user.UserName</a>
+    }
+</div>

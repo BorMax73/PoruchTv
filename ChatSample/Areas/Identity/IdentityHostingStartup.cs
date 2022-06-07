@@ -28,9 +28,12 @@ namespace poruchTv.Areas.Identity
                         options.Password.RequireUppercase = false;
                         options.Password.RequireDigit = true;
                         options.Password.RequireNonAlphanumeric = false;
+                        options.User.RequireUniqueEmail = true;
                     })
                     .AddEntityFrameworkStores<UserContext>();
+
             });
+
         }
     }
 }

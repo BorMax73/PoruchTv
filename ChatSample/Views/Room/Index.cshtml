@@ -1,11 +1,13 @@
-﻿@{
+﻿@using System.Net.Http
+@model IEnumerable<string>
+@{
     ViewData["Title"] = "SLAVA UKRAINE";
 }
 
 
 <div>
     <div  class="1">
-       @* <div id="first">
+        @* <div id="first">
             <input id="oo"/>
             <input type="button" style="width: 100px" id="submit-btn"**/>
         </div>*@
@@ -30,7 +32,24 @@
 
     </div>
        
+</div>
+<div id="slide_lft">
+    Наведи на меня
+    <div id="slide_in">
+        @if (Model != null)
+        {
+            @foreach (var friend in Model)
+            {
+              
+               
+                    <p>@friend</p>
+                <input class="invite" type="button" value="invite" name="@friend" />
+            }
+        }     
     </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
     <p style="opacity: 0" id="userName">@Context.User.Identities.FirstOrDefault()?.Name</p>
 
     <script type="text/javascript" src="lib/signalr.min.js"></script>

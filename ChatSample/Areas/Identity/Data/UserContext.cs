@@ -14,6 +14,7 @@ namespace poruchTv.Data
 {
     public class UserContext : IdentityDbContext<User>
     {
+        public DbSet<Friendship> Friendships { get; set; }
         public DbSet<Content> contents { get; set; }
         public DbSet<History> Histories { get; set; }
         public DbSet<Room> Rooms { get; set; }

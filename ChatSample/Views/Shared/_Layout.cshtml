@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="@Url.Content("~/css/header.css")"/>
     <link rel="stylesheet" href="@Url.Content("~/css/reset.css")"/>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
@@ -30,7 +29,9 @@
                         <li><a href="/Films">Фільми</a></li>
                         <li><a href="#">Серіали</a></li>
                         <li><a href="#">Підбірки</a></li>
-                    </ul>
+                        <li><a href="/Friends" id="friends">Друзі</a></li>
+
+                    </ul> 
                 </nav>
                 <div class="header-search">
                     <form method="get" action="/Search">
@@ -73,7 +74,18 @@
         </div>
     </header>
     
- 
+<div class="Message" id="Message">
+    <div class="Message-icon">
+        <i class="fa fa-bell-o"></i>
+    </div>
+    <div class="Message-body">
+        <p>Invite to watch film with your friend</p>
+        <button class="Message-button" id="js-showMe">Join</button>
+        <button class="Message-button js-messageClose">Decline</button>
+    </div>
+    <button class="Message-close js-messageClose"><i class="fa fa-times"></i></button>
+</div>
+
         @RenderBody()
    
 @*
@@ -85,7 +97,13 @@
                 @Url.Action("Search", "Home", new {name = "qwe", page = 1})
             });
     </script>*@
-    <footer class="border-top footer text-muted">
+    
+<script type="text/javascript" src="~/lib/signalr.js"></script>
+<script type="text/javascript" src="~/lib/signalr.min.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
+<script src="Notification.js"></script>
+
+<footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - Customs - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

@@ -12,16 +12,7 @@
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: 'https://calendly.com/bormax/30min', text: 'Schedule time with me', color: '#0069ff', textColor: '#ffffff', branding: true }); }</script>
     <!-- Calendly badge widget end -->
-    <table>
-        @* @foreach (var o in Model)
-        {
-            
-            <tr>
-                <a src="/Home/GetFilm?url=@o.orig_ru_title"onclick="@Url.Action("GetFilm", o)">@o.orig_ru_title</a>
-                <td><img src="@o.imgUrl"/></td>
-            </tr>
-        }*@
-    </table>
+    
 </div>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9595731160145415"
         crossorigin="anonymous"></script>

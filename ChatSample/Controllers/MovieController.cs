@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using poruchTv.Data;
 using poruchTv.Models;
 using poruchTv.Models.API;
@@ -20,7 +21,7 @@ namespace poruchTv.Controllers
         }
         public async Task<IActionResult> Index(int id)
         {
-            var result = db.contents.FirstOrDefault(x => x.id == id);
+            var result =await db.contents.FirstOrDefaultAsync(x => x.id == id);
             
             return View(result);
         }

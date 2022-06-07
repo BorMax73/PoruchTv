@@ -176,3 +176,161 @@ footer {
     flex-direction: row;
     justify-content: space-evenly;
 }
+
+
+
+
+
+#slide_lft {
+    position: fixed;
+    top: 100px;
+    right: 0;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    background: #f60;
+    color: #fff;
+    padding: 5px;
+}
+
+#slide_in {
+    position: fixed;
+    min-height: 200px;
+    top: 100px;
+    right: -250px;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    box-shadow: 0 0 5px #777;
+    background: #67C0FF;
+    color: #fff;
+    width: 250px;
+    padding: 10px;
+    box-sizing: padding-box;
+}
+
+#slide_lft:hover {
+    right: 250px;
+}
+
+#slide_lft:hover #slide_in {
+    right: 0;
+}
+
+
+
+
+
+
+
+
+/*message*/
+@import "bourbon";
+@import url(https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+.Message {
+    visibility: hidden;
+    display: table;
+    vertical-align: bottom;
+    position: fixed;
+    right: 3px;
+    bottom: 15px;
+    width: 500px;
+    background-color: #67C0FF;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.Message.is-hidden {
+    opacity: 0;
+    height: 0;
+    font-size: 0;
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+}
+
+
+
+.Message-icon {
+    display: table-cell;
+    vertical-align: middle;
+    width: 60px;
+    padding: 30px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.Message-icon > i {
+    width: 20px;
+    font-size: 20px;
+}
+
+.Message-body {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 30px 20px 30px 10px;
+}
+
+.Message-body > p {
+    line-height: 1.2;
+    margin-top: 6px;
+}
+
+.Message-button {
+    position: relative;
+    margin: 15px 5px -10px;
+    background-color: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 3px rgba(0, 0, 0, 0.4);
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: 'Source Sans Pro';
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+}
+
+.Message-button:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.Message-button:active {
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0px rgba(0, 0, 0, 0.4);
+    top: 3px;
+}
+
+.Message-close {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    right: 5px;
+    top: 5px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.Message:hover .Message-close {
+    opacity: 1;
+}
+
+.Message-close:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.u-italic {
+    font-style: italic;
+}

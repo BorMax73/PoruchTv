@@ -1,18 +1,15 @@
-﻿using System.Net;
-
-using ChatSample.Hubs;
+﻿using ChatSample.Hubs;
 using Customs.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using poruchTv.Areas.Identity.Data;
-using poruchTv.Data;
+using System.Net;
+using ChatSample.Filters;
+using Microsoft.AspNetCore.Authentication.OAuth;
 
 namespace ChatSample
 {
@@ -31,7 +28,7 @@ namespace ChatSample
             {
                 options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
             });
-            
+            services.AddSingleton<IOnlineService, OnlineService>();
             //services.AddDbContext<UserContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -40,7 +37,12 @@ namespace ChatSample
             {
                 options.EnableDetailedErrors = true;
             });
-            
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "158218210183-id3i6b5brl8jcs9ehmr53mjbdubgou36.apps.googleusercontent.com";
+                    options.ClientSecret = "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"; 
+                });
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddTransient<IEmailSender, EmailSender>();
@@ -73,6 +75,7 @@ namespace ChatSample
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            //app.UseMiddleware<OnlineStatus>();
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapHub<ChatHub>("/chat");
@@ -84,6 +87,7 @@ namespace ChatSample
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chat");
+                endpoints.MapHub<NotificationHub>("/notification");
             });
         }
     }

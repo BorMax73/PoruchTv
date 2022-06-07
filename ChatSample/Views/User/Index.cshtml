@@ -1,0 +1,11 @@
+﻿@model User
+@{
+    ViewData["Title"] = Model.UserName;
+}
+<div>
+    
+    <form method="post" asp-action="SendFriendRequest">
+        <input type="text" name="name" value="@Model.UserName"/>
+        <input type="submit"/>
+    </form>
+</div>
