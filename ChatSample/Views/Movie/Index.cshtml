@@ -2,25 +2,23 @@
 @{
     ViewData["Title"] = Model.orig_title;
 }
-<div>
-    <img class="poster-max" src="@Model.imgUrl"/>
-    <h2>@Model.ru_title</h2>
-    <p>@Model.year</p>
-    <p>@Model.overview</p>
-    <p>@Model.vote_average</p>
-    <form method="post" action="/Movie/Create?urlI=@Model.iframe_src">
-        <input type="hidden" value="@Model.imgUrl" name="PhoneId" />
-        <input #="target" type="submit" class="btn btn-default" value="Go"/>
-    </form>
-    @*@using (Html.BeginForm("Create", "Movie", Model,FormMethod.Get))
-    {
-        <table>
-            <tr>
-                <td><input type="submit" value="Submit"/></td>
-            </tr>
-        </table>
-    }*@
+<div class="movie-page">
+    <div class="movie-page-details">
+        <img class="poster-max" src="@Model.imgUrl"/>
+        <div>
+            <h2>@Model.ru_title</h2>
+            <p>@Model.year</p>
+            <p>@Model.overview</p>
+            <p>@Model.vote_average</p>
+            <form method="post" action="/Movie/Create?urlI=@Model.iframe_src">
+                <input type="hidden" value="@Model.imgUrl" name="PhoneId" />
+                <input #="target" type="submit" class="btn go-button" value="Go"/>
+            </form>
+        </div>
+    </div>
+    
 </div>
+
 <script>
     function send() {
       
