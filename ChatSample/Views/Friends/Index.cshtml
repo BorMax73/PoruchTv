@@ -2,26 +2,45 @@
 @{
     ViewData["Title"] = "Friends";
 }
-<form method="get"  asp-action="SearchUsers" >
-    <input id="searchInput" minlength="2" name="name" type="text"/>
-    <input id="btn" type="submit"/>
-</form>
-@if(Model.Friendships != null){
-    @foreach (var friend in Model.Friendships)
-    {
-        <a href="/user?name=@friend.FirstUserName">@friend.FirstUserName</a>
-        <form method="post" asp-action="AcceptFriend">
-            <input type="hidden" value="@friend.Id" name="id"/>
-            <input type="submit"/>
-        </form>
-        <form method="post" asp-action="DeleteFriend">
-            <input type="hidden" value="@friend.Id" name="id"/>
-            <input value="x" type="submit"/>
-        </form>
-    }
-}
+<div class="friends">
+    <form method="get" asp-action="SearchUsers" class="search-friend">
+        <h3>Знайти друга:</h3>
+        <div>
+            <input id="searchInput" class="search-friend-field" minlength="2" name="name" type="text"/>
+            <input id="btn" class="btn search-friend-button" type="submit"/>
+        </div>
+        
+    </form>
 
-@foreach (var user in Model.FriendNames)
-{
-    <a href="/user?name=@user">@user</a>
-}
+    @if(Model.Friendships != null){
+        <div class="friends-requests">
+            <h5>Запити в друзі:</h5>
+            @foreach (var friend in Model.Friendships)
+            {
+                <div class="friend-request">
+                    <a href="/user?name=@friend.FirstUserName">@friend.FirstUserName</a>
+                    <div>
+                        <form method="post" asp-action="AcceptFriend">
+                            <input type="hidden" value="@friend.Id" name="id"/>
+                            <input value="Прийняти" type="submit" class="btn"/>
+                        </form>
+                        <form method="post" asp-action="DeleteFriend">
+                            <input type="hidden" value="@friend.Id" name="id"/>
+                            <input value="Відхилити" class="btn" type="submit"/>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    
+    <div class="friends-list">
+        <h5>Список друзів:</h5>
+        @foreach (var user in Model.FriendNames)
+        {
+            <div class="friend">
+                <a href="/user?name=@user">@user</a>
+            </div>
+        }
+    </div>
+</div>

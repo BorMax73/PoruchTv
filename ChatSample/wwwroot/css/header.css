@@ -40,12 +40,17 @@ header {
     color: #FDD291;
     text-decoration: none;
 }
+.header-search {
+    position: relative;
+}
 .search-input {
     padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 10px;
+    padding-right: 20px;
+    border-radius: 15px;
 }
 .search-button {
+    position: absolute;
+    right: 3px;
     width: 21px;
     height: 21px;
     margin: 3px;
@@ -56,7 +61,10 @@ header {
 
     body { font-size: 15px; }
 
-    .search-button { width: 16px; }
+    .search-button {
+        width: 18px;
+        margin: 1px;
+    }
      
     #friends-counter { width: 22px !important; height: 22px !important;}
 }
