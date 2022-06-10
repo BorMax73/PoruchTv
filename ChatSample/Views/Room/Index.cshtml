@@ -6,19 +6,16 @@
 
 
 <div>
-    <div  class="1">
-        @* <div id="first">
-            <input id="oo"/>
-            <input type="button" style="width: 100px" id="submit-btn"**/>
-        </div>*@
-    </div>
-    <div id="main">
-        <iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" frameborder="0" allowfullscreen></iframe>
+    <div id="main" class="main">
+        <div class="watch-movie">
+            <iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" allowfullscreen></iframe>
+        </div>
+        
         <div class="chat">
             <div id="users">
 
             </div>
-            <div id="chat">
+            <div id="chat" class="chat">
 
             </div>
             <div id="inputForm">
@@ -26,14 +23,10 @@
                 <input type="button" id="sendBtn" value="Отправить"/>
             </div>
         </div>
-        <aside><div class="chat">
-            
-        </div></aside>
-
     </div>
-       
 </div>
-<div id="slide_lft">
+<!--
+    <div id="slide_lft">
     Наведи на меня
     <div id="slide_in">
         @if (Model != null)
@@ -47,7 +40,8 @@
             }
         }     
     </div>
-</div>
+    </div>
+    -->
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
     <p style="opacity: 0" id="userName">@Context.User.Identities.FirstOrDefault()?.Name</p>

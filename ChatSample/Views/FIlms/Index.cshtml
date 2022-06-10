@@ -1,119 +1,183 @@
 ﻿@using poruchTv.Controllers
 @using poruchTv.Models.Video
+@using Microsoft.CodeAnalysis
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @model poruchTv.Models.PaginatedList<poruchTv.Models.Video.Content>
 
 @{
     ViewData["Title"] = "Films";
     
 }
+<nav class="filmser-header">
+    <a href="" style="background: linear-gradient(180deg, rgba(145,208,253,1) 0%, rgba(255,255,255,0) 100%);">Фільми</a>
+    <a href="#">Серіали</a>
+</nav>
 
-<div class="content">
-    <div class="results">
-        @foreach (var obj in Model)
-        {
-            <a href="/Movie?id=@obj.id">
-                <div class="poster">
-                    <img class="poster" src="@obj.imgUrl"/>
-                </div>
-                <h3>@obj.orig_title</h3>
-                <h4>@obj.ru_title</h4>
-            </a>
-        }
-    </div>
+<div class="film-page">
     <div class="filters">
         <form method="get" asp-action="GetFilms">
             @{
                 Genres input = new Genres();
             }
-            <div>
-                <h3>Рік</h3>
-                <p>Від</p>
-                <input type="number" value="@ViewData["yearStart"]" name="yearStart"/>
-                <p>До</p>
-                <input type="number" value="@ViewData["yearEnd"]" name="yearEnd"/>
+            <div class="filter-item">
+            <h3>Фільтри</h3>
             </div>
-            <div>
-                <h3>Рейтинг</h3>
+            <div class="filter-item">
+                <h4>Рік</h4>
+                <div>
+                    <p>Від</p>
+                    <input type="number" value="@ViewData["yearStart"]" name="yearStart"/>
+                </div>
+                <div>
+                    <p>До</p>
+                    <input type="number" value="@ViewData["yearEnd"]" name="yearEnd"/>
+                </div>
+            
+            </div>
+            <div class="filter-item">
+                <h4>Рейтинг</h4>
                 <p>Від</p>
                 <input type="number" value="@ViewData["rattingLow"]" name="rattingLow"/>
                 <p>До</p>
                 <input type="number" value="@ViewData["rattingHigh"]" name="rattingHigh"/>
             </div>
-            <div>
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[28])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[12])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[16])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[35])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[80])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[99])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[18])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[10751])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[14])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[36])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[27])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[10402])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[9648])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[10749])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[878])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[10770])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[53])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[10752])
-                <p>Action</p>
-                @Html.CheckBoxFor(x=>input.GenresInput[37])
+            <div class="filter-item genres">
+                <h4>Жанр</h4>
+                <div class="genre-item">
+                    <p>Екшн</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[28])
+                </div>
+                <div class="genre-item">
+                    <p>Пригода</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[12])
+                </div>
+                <div class="genre-item">
+                    <p>Мультфільм</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[16])
+                </div>
+                <div class="genre-item">
+                    <p>Комедія</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[35])
+                </div>
+                <div class="genre-item">
+                    <p>Злочин</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[80])
+                </div>
+                <div class="genre-item">
+                    <p>Документалка</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[99])
+                </div>
+                <div class="genre-item">
+                    <p>Сімейний</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[10751])
+                </div>
+                <div class="genre-item">
+                    <p>Фентезі</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[14])
+                </div>
+                <div class="genre-item">
+                    <p>Історія</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[36])
+                </div>
+                <div class="genre-item">
+                    <p>Хоррор</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[27])
+                </div>
+                <div class="genre-item">
+                    <p>Музичний</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[10402])
+                </div>
+                <div class="genre-item">
+                    <p>Загадки</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[9648])
+                </div>
+                <div class="genre-item">
+                    <p>Романс</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[10749])
+                </div>
+                <div class="genre-item">
+                    <p>Науковий</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[878])
+                </div>
+                <div class="genre-item">
+                    <p>Телевізійний</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[10770])
+                </div>
+                <div class="genre-item">
+                    <p>Триллер</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[53])
+                </div>
+                <div class="genre-item">
+                    <p>Війна</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[10752])
+                </div>
+                <div class="genre-item">
+                    <p>Вестерн</p>
+                    @Html.CheckBoxFor(x => input.GenresInput[37])
+                </div>
+                
+                
+                
+                
+                
+                
+               
+                
+                
+                
             </div>
-            <div>
-                <input type="checkbox"/>
-            </div>
-            @Html.EditorFor(x=>input)
-            <input type="submit"/>
+            @Html.EditorFor(x => input)
+            <input type="submit" class="btn submit-button"/>
         </form>
     </div>
+    <div class="content">
+        <div class="results">
+            @foreach (var obj in Model)
+            {
+                <a href="/Movie?id=@obj.id" onmouseover="this.style.textDecoration = 'none';" class="result">
+                    <div class="poster">
+                        <img class="poster" src="@obj.imgUrl"/>
+                    </div>
+                    <h4>@obj.orig_title</h4>
+                    <h5>@obj.ru_title</h5>
+                </a>
+            }
+        </div>
+    </div>
 </div>
+
+
+
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
+<div class="nextprevbuttons">
+    <a asp-action="GetFilms"
+       asp-route-yearStart="@ViewData["yearStart"]"
+       asp-route-yearEnd="@ViewData["yearEnd"]"
+       asp-route-rattingLow="@ViewData["rattingLow"]"
+       asp-route-rattingHigh="@ViewData["rattingHigh"]"
 
-<a asp-action="GetFilms"
-   asp-route-yearStart="@ViewData["yearStart"]"
-   asp-route-yearEnd="@ViewData["yearEnd"]"
-   asp-route-rattingLow="@ViewData["rattingLow"]"
-   asp-route-rattingHigh="@ViewData["rattingHigh"]"
-
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-
-<a asp-action="GetFilms"
-   asp-route-yearStart="@ViewData["yearStart"]"
-   asp-route-yearEnd="@ViewData["yearEnd"]"
-   asp-route-rattingLow="@ViewData["rattingLow"]"
-   asp-route-rattingHigh="@ViewData["rattingHigh"]"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Попередня
+    </a>
+    <p class="pagenum btn">
+        @(Model.PageIndex)
+    </p>
+    <a asp-action="GetFilms"
+       asp-route-yearStart="@ViewData["yearStart"]"
+       asp-route-yearEnd="@ViewData["yearEnd"]"
+       asp-route-rattingLow="@ViewData["rattingLow"]"
+       asp-route-rattingHigh="@ViewData["rattingHigh"]"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Наступна
+    </a>
+</div>
