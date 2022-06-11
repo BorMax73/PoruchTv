@@ -19,7 +19,7 @@ connection.onclose(async () => {
 start();
 connection.on('FriendCount', function (count) {
 
-    document.getElementById("friends").innerText = "Друзі " + count;
+    document.getElementById("friends-counter").innerText = count;
 });
 connection.on('invite', function (message, key, url) {
     /*alert("asd");*/

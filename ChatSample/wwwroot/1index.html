@@ -21,147 +21,11 @@
     <ul id="discussion"></ul>
 </div>
 <button id="con">Connect</button>
-<iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" width="640" height="480" style="horiz-align: right; vertical-align: bottom" frameborder="0" allowfullscreen></iframe>
-<!--Script references. -->
-    <!--Reference the SignalR library. -->
-    <script type="text/javascript" src="lib/signalr.min.js"></script>
-    <!--Add script to update the page and send messages.-->
-    <!--<script type="text/javascript">
-        document.addEventListener('DOMContentLoaded',
-            function() {
+<div>
 
-                
-                var seekMain = 2300;
-                // Start the connection.
+</div>
 
-                var connection = new signalR.HubConnectionBuilder()
-                    .withUrl('/chat')
-                    .build();
-               
-                //connection.invoke("Enter", "test", name);
-                var messageInput = document.getElementById('message');
-
-                // Get the user name and store it to prepend to messages.
-                var name = prompt('Enter your name:', '');
-                // Set initial focus to message input box.
-                messageInput.focus();
-                connection.invoke("Enter", "qwe", name);
-           
-                connection.on("Notify", function (message) {
- 
-                    var elem = document.createElement("p");
-                    elem.appendChild(document.createTextNode(message));
- 
-                    var firstElem = document.getElementById("chatroom").firstChild;
-                    document.getElementById("chatroom").insertBefore(elem, firstElem);
-                });
-                //var player = new playerjs.Player(document.getElementById('if'));
-                window.addEventListener("message",
-                    function(event) {
-                        /*console.log(event.data.event + "ddddddddddddddddddddddddddddddd");*/
-                        if (event.data.event === 'time' & typeof event.data.time !== 'undefined') {
-                            seekMain = event.data.time;
-                            console.log(event.data.time);
-                        }
-                        if (event.data.event === 'seek' & typeof event.data.time !== 'undefined') {
-                            seekMain = event.data.time;
-                            console.log(event.data.time);
-                        }
-                    
-                        //if (event.data.event === 'seek' & typeof event.data.time !== 'undefined' & event.data.playing == 'false') {
-                        //    console.log("SLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-                        //    seekMain = event.data.time;
-                        //    try {
-                        //        connection.invoke("SetTime", seekMain);
-                        //        //document.getElementById("if").contentWindow.postMessage({ "api": "time","set":seekMain }, "*");
-
-                        //    } catch (err) {
-                        //        console.error(err);
-                        //    }
-                        //    console.log(event.data.time);
-                        //}
-                        if (event.data.event == 'paused') {
-                            console.log("Signal pause!");
-                            try {
-                                connection.invoke("SetTime", seekMain);
-                                connection.invoke("Pause", "pause", seekMain);
-                            } catch (err) {
-                                console.error(err);
-                            }
-
-                        }
-                        if (event.data.event == 'resumed') {
-                            console.log("Signal play!");
-                            try {
-                                //connection.invoke("Enter", "test", name);
-                                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                                console.log(seekMain);
-                                console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                                connection.invoke("SetTime", seekMain);
-                                document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seekMain }, "*");
-                                connection.invoke("Play", "play", seekMain);
-                            } catch (err) {
-                                console.error(err);
-                            }
-                        }
-                    });
-                // Create a function that the hub can call to broadcast messages.
-                connection.on('Play', function (command, seek) {
-                    // Html encode display name and message.
-                    document.getElementById("if").contentWindow.postMessage({ "api": "play" }, "*");
-                    document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seek }, "*");
-
-                });
-                connection.on('SetTime', function (time) {
-
-                    document.getElementById("if").contentWindow.postMessage({ "api": "seek","set":time }, "*");
-                });
-                connection.on('Pause', function (command, time) {
-                    document.getElementById("if").contentWindow.postMessage({ "api": "pause"}, "*");
-                    document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": time }, "*");
-
-                });
-                // Transport fallback functionality is now built into start.
-                //    connection.start()
-                //        .then(function () {
-                //            var seek;
-                //            console.log('connection started');
-                //            document.getElementById('sendmessage').addEventListener('click', function (event) {
-                //                // Call the Send method on the hub.
-                        
-                        
-                //                document.getElementById("if").contentWindow.postMessage({ "api": "seek" }, "*");
-                //                connection.invoke('Play', name, seekMain);
-
-                //                // Clear text box and reset focus for next comment.
-                //                messageInput.value = '';
-                //                messageInput.focus();
-                //                event.preventDefault();
-                //            });
-                //        })
-                //        .catch(error => {
-                //            console.error(error.message);
-                //        });
-                //    connection.start()
-                //        .then(function () {
-                //            console.log('connection started');
-                //            document.getElementById('Sync').addEventListener('click', function (event) {
-                //                // Call the Send method on the hub.
-                //                var time = document.getElementById("timeI").value;
-                //                connection.invoke('SetTime', time);
-
-                //                // Clear text box and reset focus for next comment.
-                //                messageInput.value = '';
-                //                messageInput.focus();
-                //                event.preventDefault();
-                //            });
-                //        })
-                //        .catch(error => {
-                //            console.error(error.message);
-                //        });
-                //});
-            });
-    </script>-->
+<script type="text/javascript" src="lib/signalr.min.js"></script>
 <script type="text/javascript" src="//cdn.embed.ly/player-0.1.0.min.js"></script>
 <script>
     var connection = new signalR.HubConnectionBuilder()
@@ -170,7 +34,6 @@
     var seekMain = 0;
     window.addEventListener("message",
         function (event) {
-            /*console.log(event.data.event + "ddddddddddddddddddddddddddddddd");*/
             if (event.data.event === 'time' & typeof event.data.time !== 'undefined') {
                 seekMain = event.data.time;
                 console.log(event.data.time);
@@ -179,19 +42,6 @@
                 seekMain = event.data.time;
                 console.log(event.data.time);
             }
-
-            //if (event.data.event === 'seek' & typeof event.data.time !== 'undefined' & event.data.playing == 'false') {
-            //    console.log("SLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-            //    seekMain = event.data.time;
-            //    try {
-            //        connection.invoke("SetTime", seekMain);
-            //        //document.getElementById("if").contentWindow.postMessage({ "api": "time","set":seekMain }, "*");
-
-            //    } catch (err) {
-            //        console.error(err);
-            //    }
-            //    console.log(event.data.time);
-            //}
             if (event.data.event == 'paused') {
                 console.log("Signal pause!");
                 try {

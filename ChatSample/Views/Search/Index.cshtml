@@ -2,11 +2,12 @@
 @{
     ViewData["Title"] = "Search";
 }
-
-<div class="content">
+<h4 style="width: 100%; text-align: center; padding-top: 20px;">Результати пошуку "@ViewData["name"]"</h4>
+<div class="results" style="padding-left: 5%; padding-right: 5%;">
+    
     @foreach (var obj in Model)
     {
-        <a href="/Movie?id=@obj.id">
+        <a href="/Movie?id=@obj.id" class="result" onmouseover="this.style.textDecoration = 'none';">
             <div class="poster">
                 <img class="poster" src="@obj.imgUrl"/>
             </div>
@@ -19,18 +20,22 @@
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-
-<a asp-action="Index"
-   asp-route-name="@ViewData["name"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-name="@ViewData["name"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
+<div class="nextprevbuttons">
+    <a asp-action="Index"
+       asp-route-name="@ViewData["name"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn @prevDisabled">
+        Попередня
+    </a>
+    <p class="pagenum btn">
+        @(Model.PageIndex)
+    </p>
+    <a asp-action="Index"
+       asp-route-name="@ViewData["name"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn @nextDisabled">
+        Наступна
+    </a>
+</div>
