@@ -37,7 +37,7 @@ namespace ChatSample.Hubs
                     await db.SaveChangesAsync();
                 }
                 var connectionId = Context.ConnectionId;
-                await db.UserSessions.AddAsync(new UserSession() { Name = username, RoomId = roomId, SessionId = connectionId });
+                await db.UserSessions.AddAsync(new UserSession() { Name = username, RoomId = roomId, SessionId = connectionId, Url = link });
                 await db.SaveChangesAsync();
                 await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
                 Users.TryAdd(username, seek);

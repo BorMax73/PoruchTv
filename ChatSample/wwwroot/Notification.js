@@ -21,8 +21,8 @@ connection.on('FriendCount', function (count) {
 
     document.getElementById("friends").innerText = "Друзі " + count;
 });
-connection.on('invite', function (message, url) {
-    alert("asd");
+connection.on('invite', function (message, key, url) {
+    /*alert("asd");*/
     document.getElementById("Message").style.visibility = 'visible';
     document.getElementById("Message").name = url;
     
@@ -41,7 +41,7 @@ var elements = document.getElementsByClassName("invite");
 document.getElementById("js-showMe").addEventListener("click", function (e) {
     var url = document.getElementById("Message").name;
     document.getElementById("Message").style.visibility = 'hidden';
-     window.location.replace(url);
+     window.location.replace("/Home");
     
 });
 var linkUrl = window.location.href;
