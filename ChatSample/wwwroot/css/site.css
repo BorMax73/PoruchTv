@@ -31,7 +31,7 @@
 .filmser-header *:hover {
     text-decoration: none;
 }
-    .film-page {
+.film-page {
         display: flex;
         flex-direction: row;
     }
