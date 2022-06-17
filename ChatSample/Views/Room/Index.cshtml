@@ -11,7 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="@Url.Content("~/css/header.css")"/>
     <link rel="stylesheet" href="@Url.Content("~/css/reset.css")"/>
-
 <div>
     <div id="main" class="main">
         <div class="watch-movie">
@@ -51,9 +50,9 @@
     -->
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
-    <p style="opacity: 0" id="userName">@Context.User.Identities.FirstOrDefault()?.Name</p>
+<p style="opacity: 0" id="userName">@Context.User.Identities.FirstOrDefault()?.Name</p>
 
-    <script type="text/javascript" src="lib/signalr.min.js"></script>
+<script type="text/javascript" src="lib/signalr.min.js"></script>
 <script src="jquery-3.6.0.min.js"></script>
 
 <script src="room.js"></script>
