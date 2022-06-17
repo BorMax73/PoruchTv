@@ -132,7 +132,6 @@ connection.on('Send', function (message, username) {
 
     var firstElem = document.getElementById("chat").firstChild;
     document.getElementById("chat").insertBefore(elem, firstElem);
-
 });
 connection.on('Notify', function (Users) {
     //var users = Object.entries(Users);
@@ -172,3 +171,33 @@ document.getElementById("submit-btn").addEventListener("click", function (e) {
     connection.invoke("Enter", roomId, name);
 });
 //connection.start();
+
+
+
+var elements = document.getElementsByClassName("invite");
+
+var linkUrl = window.location.href;
+var myFunction = function () {
+    var attribute = this.getAttribute("name");
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/Room/Invite?name=" + attribute + "&key=" + linkUrl.split('?key=')[1].split("&")[0]);
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+        }
+    };
+
+    let data = `{
+  "name": ${attribute}
+   }`;
+
+    xhr.send(data);
+};
+
+for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', myFunction, false);
+}

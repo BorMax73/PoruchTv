@@ -24,6 +24,10 @@
         }
         public async Task<IActionResult> Index(string key, string url)
         {
+            if (string.IsNullOrEmpty(url))
+            {
+                return StatusCode(400);
+            }
             
             if (User?.Identity.IsAuthenticated == true)
             {
@@ -49,7 +53,7 @@
         }
 
         [HttpPost]
-        public async Task Invite(string name, string url)
+        public async Task Invite(string name, string key)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -60,7 +64,8 @@
             var user = await db.Users.FirstOrDefaultAsync(x => x.UserName == name);
             if (user == null)
                 return;
-            await hub.Clients.User(user.Id).SendAsync("invite", "test", url);
+            var room =  await db.Rooms.FirstOrDefaultAsync(x => x.Name == key);
+            await hub.Clients.User(user.Id).SendAsync("invite", "test", key, room.FilmUrl);
         }
 
     }
