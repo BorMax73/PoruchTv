@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System.Net;
 using ChatSample.Filters;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
 
 namespace ChatSample
 {

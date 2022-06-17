@@ -1,4 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@using Microsoft.CodeAnalysis
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
@@ -75,10 +78,16 @@
     </footer>
 </div>
 
+
+@if (string.Compare(HttpContext.Current.Request.Url.LocalPath.EndsWith("Room.aspx")) == 0)
+{
+    <script src="Notification.js"></script>
+}
+
 <script type="text/javascript" src="~/lib/signalr.js"></script>
 <script type="text/javascript" src="~/lib/signalr.min.js"></script>
 <script src="jquery-3.6.0.min.js"></script>
-<script src="Notification.js"></script>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>

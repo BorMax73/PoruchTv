@@ -2,10 +2,10 @@
 @{
     ViewData["Title"] = Model.orig_title;
 }
-<div class="movie-page">
-    <div class="movie-page-details">
+<div class="movie-page container">
+    <div class="movie-page-details row">
         <img class="poster-max" src="@Model.imgUrl"/>
-        <div>
+        <div style="width: 80%;">
             <h2>@Model.ru_title</h2>
             <p>@Model.year</p>
             <p>@Model.overview</p>
@@ -21,8 +21,6 @@
 
 <script>
     function send() {
-      
-
         $('#target').html('sending..');
 
         $.ajax({
