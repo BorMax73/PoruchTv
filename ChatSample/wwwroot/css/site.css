@@ -293,23 +293,24 @@ main {
     height: min-content;
 }
 .watch-movie iframe {
-    width: 910px;
-    height: 450px;
+    min-width: 910px;
+    width: 60vw;
+    min-height: 450px;
+    height: 30vw;
 }
 .chat_wrapper {
     display: flex;
     flex-direction: column;
-    width: 450px;
+    min-width: 450px;
+    width: 30vw;
+    height: 31.5vw;
     background: #D4EBF9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     padding-left: 25px;
-    height: 480px;
+    min-height: 480px;
     word-wrap: break-word;
     padding: 10px;
-}
-.inputForm {
-    top: 0px;
 }
 .users > div {
     border-radius: 25px;
@@ -366,6 +367,8 @@ main {
 }
 @media (max-width: 960px) {
     .watch-movie iframe {
+        min-width: 0px;
+        min-height: 0px;
         width: 600px;
         height: 300px;
     }
