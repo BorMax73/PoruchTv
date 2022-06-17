@@ -2,52 +2,44 @@
 @model IEnumerable<string>
 @{
     ViewData["Title"] = "SLAVA UKRAINE";
-    Layout = null;
+    Layout = Layout;
 }
 
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="@Url.Content("~/css/header.css")"/>
-    <link rel="stylesheet" href="@Url.Content("~/css/reset.css")"/>
-<div>
-    <div id="main" class="main">
-        <div class="watch-movie">
-            <iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" allowfullscreen></iframe>
+<div class="main">
+    <div class="watch-movie">
+        <iframe id="if" src="//37.svetacdn.in/YcrGt9kjVpz5/movie/8383" allowfullscreen></iframe>
+    </div>
+    <div class="chat_wrapper">
+        <div id="users" class="users">
+
         </div>
-        
-        <div class="chat">
-            <div id="users">
+        <div id="chat" class="chat">
 
-            </div>
-            <div id="chat" class="chat">
-
-            </div>
-            <div id="inputForm">
-                <input type="text" id="message"/>
-                <input type="button" id="sendBtn" value="Отправить"/>
-            </div>
+        </div>
+        <div id="inputForm">
+            <input type="text" id="message" class="input_message" autofocus/>
+            <input type="button" id="sendBtn" class="btn send_button" value="Відправити"/>
         </div>
     </div>
 </div>
-<!--
-    <div id="slide_lft">
+<!-- 
+<div id="slide_lft">
     Наведи на меня
     <div id="slide_in">
         @if (Model != null)
         {
             @foreach (var friend in Model)
             {
-              
-               
-                    <p>@friend</p>
+                <h6>@friend</h6>
                 <input class="invite" type="button" value="invite" name="@friend" />
             }
         }     
     </div>
-    </div>
-    -->
+</div>
+-->
+
+
+
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 
 <p style="opacity: 0" id="userName">@Context.User.Identities.FirstOrDefault()?.Name</p>

@@ -286,6 +286,7 @@ main {
 }
 .watch-movie {
     width: min-content;
+    
     padding: 10px;
     border-radius: 20px;
     background: black;
@@ -295,28 +296,80 @@ main {
     width: 910px;
     height: 450px;
 }
-.chat {
+.chat_wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
     background: #D4EBF9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     padding-left: 25px;
     height: 480px;
+    word-wrap: break-word;
+    padding: 10px;
+}
+.inputForm {
+    top: 0px;
+}
+.users > div {
+    border-radius: 25px;
+    padding: 3px;
+    border: 3px solid #FDD291;
+    font-weight: 500;
+    margin: 5px;
+}
+.chat {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 90%;
+    display: flex;
+    flex-direction: column-reverse;
+    background: rgba(103, 192, 255, 0.2);
+    border-radius: 15px;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.chat p {
+    background: rgba(103, 192, 255, 0.2);
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+.inputForm {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.input_message {
+    border-bottom: #FDD291 3px dashed;
+    width: calc(100% - 120px);
+    border-radius: 10px;
+    padding: 5px;
+}
+.send_button {
+    background: #fdd291 !important;
+    padding: calc(4px + 0.2vw);
+}
+.send_button:hover {
+    background: #FFA722 !important;
 }
 @media (max-width: 1455px) {
     .main {
-        justify-content: center;
-    }
-    .chat {
-        width: 900px;
-        margin-top: 20px;
-    }
+    justify-content: center;
+}
+.chat_wrapper {
+    width: 900px;
+    margin-top: 20px;
+}
 }
 @media (max-width: 960px) {
     .watch-movie iframe {
         width: 600px;
         height: 300px;
     }
-    .chat {
+    .chat_wrapper {
         width: 600px;
     }
 }
@@ -329,93 +382,11 @@ main {
         width: 450px;
         height: 225px;
     }
-    .chat {
+    .chat_wrapper {
         width: 450px;
     }
 }
 /* watch video end*/
-.container {
-    width: 1400px;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media (max-width: 1399px) {
-    .container {
-        width: 100%;
-    }
-}
-
-.container-wide {
-    width: 1536px;
-}
-
-@media (max-width: 1535px) {
-    .container-wide {
-        width: 100%;
-    }
-}
-
-.no-scroll {
-    overflow: hidden;
-}
-
-img, svg {
-    vertical-align: top;
-    max-width: 100%;
-    height: auto;
-}
-
-.nav {
-    display: flex;
-    list-style-type: none;
-    flex-flow: nowrap;
-    justify-content: space-between;
-}
-
-section {
-    display: block;
-}
-
-
-.header-panel {
-    /*width: 1920px;*/
-    height: 139px;
-    left: 0px;
-    top: 0px;
-    background: #67C0FF;
-}
-
-
-
-
-#users {
-    position: static;
-    padding-left: 25px;
-}
-#chat {
-    padding-left: 25px;
-    position: static;
-    height: 600px;
-    width: 400px;
-    hyphens: auto;
-    overflow-x:auto;
-    
-}
-#chat>p {
-    width: 380px;
-    hyphens: auto;
-}
-#inputForm {
-    height: 35px;
-    width: 100px;
-    padding-top: 50px;
-    padding-left: 25px;
-    vertical-align: bottom;
-}
-
 
 
 #slide_lft {
