@@ -1,7 +1,4 @@
-﻿main {
-    min-height: 80vh;
-}
-header {
+﻿header {
     position: relative;
     background: #91D0FD;
     padding: 5px;
@@ -45,7 +42,7 @@ header {
 }
 .search-input {
     padding-left: 10px;
-    padding-right: 20px;
+    padding-right: 30px;
     border-radius: 15px;
 }
 .search-button {
@@ -54,6 +51,9 @@ header {
     width: 21px;
     height: 21px;
     margin: 3px;
+}
+header a {
+    color: black;
 }
 
 @media only screen and (max-width: 700px) {
