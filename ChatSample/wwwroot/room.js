@@ -106,7 +106,7 @@ connection.on('Play', function (command, seek) {
     document.getElementById("if").contentWindow.postMessage({ "api": "seek", "set": seek }, "*");
     isPlay = true;
     document.getElementById("if").contentWindow.postMessage({ "api": "play" }, "*");
-
+    var tests = document.getElementsByClassName("test");
 });
 connection.on('SetTime', function (command, time) {
 
