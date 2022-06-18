@@ -17,8 +17,11 @@ connection.onclose(async () => {
     await start();
 });
 start();
+if (count == 0) {
+    document.getElementById("friends-counter").style.visibility = 'hidden';
+}
 connection.on('FriendCount', function (count) {
-
+    
     document.getElementById("friends-counter").innerText = count;
 });
 connection.on('invite', function (message, key, url) {

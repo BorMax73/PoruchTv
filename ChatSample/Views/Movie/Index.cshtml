@@ -2,27 +2,32 @@
 @{
     ViewData["Title"] = Model.OriginalTitle;
 }
-<div class="movie-page container">
+<div class="movie-page">
     <div class="movie-page-details row">
-        <img class="poster-max" src="@Model.ImageUrl"/>
-        <div style="width: 80%;">
+        <img src="@Model.ImageUrl" class="poster-max"/>
+        <div class="movie-page-information">
             <h2>@Model.Title</h2>
             <p>@Model.ReleaseDate</p>
-            <p>@Model.Overview</p>
-            <p>@Model.VoteAverage</p>
-            @foreach (var url in ViewBag.Urls)
-            {
-                <form asp-action="Create" asp-controller="Movie">
-                    <p>@url.Title</p>
-                    <input type="hidden" name="urlI" value="@url.Url"/>
-                    <input type="submit" value="Переглянути"/>
-                </form>
-            }
-            <form method="post" action="/Movie/Create?urlI=@*@Model.iframe_src*@">
-                <input type="hidden" value="@Model.ImageUrl" name="PhoneId" />
-                <input #="target" type="submit" class="btn go-button" value="Go"/>
-            </form>
+            <div class="movie-page-information-overview">
+                <p>@Model.Overview</p>
+            </div>
+            <p>Рейтинг: @Model.VoteAverage</p>
         </div>
+        <div>
+            <h3>Оберіть озвучку:</h3>
+            <div class="movie-page-information-item">
+
+                @foreach (var url in ViewBag.Urls)
+                {
+                    <form asp-action="Create" asp-controller="Movie" class="view-item">
+                        <p>@url.Title</p>
+                        <input type="hidden" name="urlI" value="@url.Url"/>
+                        <input type="submit" value="Переглянути" class="btn go-button"/>
+                    </form>
+                }
+            </div>
+        </div>
+        
     </div>
     
 </div>

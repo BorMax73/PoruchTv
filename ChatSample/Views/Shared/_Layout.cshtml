@@ -30,16 +30,11 @@
                     <a href="/Films" onmouseover="this.style.textDecoration='none';" >Фільми</a>
                 <div>
                     <a href="/Friends" id="friends" class="header-nav-friends" onmouseover="this.style.textDecoration='none';">Друзі</a>
-                    <a href="/Friends" class="friends-counter" style="border-radius: 25px;" 
-                       onmouseover="this.style.color='#91d0fd'; this.style.textDecoration='none';" 
-                       onmouseout="this.style.color='black';" >
-                            <p id="friends-counter" style="background: #fdd291; 
-                                                       border-radius: 25px; 
-                                                       height: 28px; 
-                                                       width: 28px; 
-                                                       text-align: center; 
-                                                       justify-content: center; 
-                                                       margin: 0px;}"></p></>
+                    <a href="/Friends" class="friends-counter" style="border-radius: 25px;"
+                       onmouseover="this.style.color = '#91d0fd';this.style.textDecoration = 'none';"
+                       onmouseout="this.style.color = 'black';">
+                        <p id="friends-counter" style="background: #fdd291; border-radius: 25px; height: 28px; width: 28px; text-align: center; justify-content: center; margin: 0px;}"></p>
+                        </>
                     </a>
                 </div>
                 </div>
@@ -64,7 +59,7 @@
         <div class="Message-body">
             <p>Invite to watch film with your friend</p>
             <button class="Message-button" id="js-showMe">Join</button>
-            <button class="Message-button js-messageClose">Decline</button>
+            <button class="Message-button" id="js-messageClose">Decline</button>
         </div>
         <button class="Message-close js-messageClose"><i class="fa fa-times"></i></button>
     </div>
@@ -81,7 +76,6 @@
 <script type="text/javascript" src="~/lib/signalr.js"></script>
 <script type="text/javascript" src="~/lib/signalr.min.js"></script>
 <script src="jquery-3.6.0.min.js"></script>
-
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>

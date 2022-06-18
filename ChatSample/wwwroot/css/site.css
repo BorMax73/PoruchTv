@@ -162,8 +162,6 @@ main {
 /* movie */
 .movie-page {
     margin: 2vw;
-    margin-left: 10vw;
-    margin-right: 10vw;
     padding-bottom: 4px;
 }
 .movie-page-details {
@@ -173,23 +171,44 @@ main {
     justify-content: center;
 
 }
-.movie-page-details div {
-    max-width: 500px;
-    width: 40%;
-    margin-top: 50px;
+.movie-page-information {
+    display: flex;
+    flex-direction: column;
+    max-width: 25vw;
+    width: 100%;
     padding-left: 10px;
     padding-right: 10px;
 }
 .poster-max {
-    width: 400px;
+    width: 25vw;
+    height: min-content;
 }
 .go-button {
     margin: 20px;
     background: #fdd291 !important;
-    width: 100px;
+    height: min-content;
+}
+.movie-page-information-overview {
+    max-height: 55vh;
+    overflow-y: scroll;
+}
+.view-item {
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #67c0ff;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.movie-page-information-item {
+    max-width: 25vw;
+    max-height: 70vh;
+    overflow-y: scroll;
 }
 /* movie end*/
-
 /* friends */
 .friends {
     margin: 10%;
@@ -445,10 +464,8 @@ main {
     box-sizing: border-box;
 }
 
-
-
 .Message {
-    visibility: hidden;
+    visibility: hidden; 
     display: table;
     vertical-align: bottom;
     position: fixed;
@@ -468,8 +485,6 @@ main {
     margin: 0 auto;
     display: block;
 }
-
-
 
 .Message-icon {
     display: table-cell;
