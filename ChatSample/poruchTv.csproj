@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="db\" />
     <Folder Include="Models\API\imdb\" />
     <Folder Include="Models\Random\" />
     <Folder Include="Models\Video\" />

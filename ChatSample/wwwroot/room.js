@@ -11,6 +11,8 @@ async function setSettings() {
     name = "";
     roomId = url.split('?key=')[1].split("&")[0];
     link = url.split('url=')[1].replaceAll("%2F", "/");
+    link = link.replaceAll("%3F", "?");
+    link = link.replaceAll("%3D", "=");
     isPlay = false;
     seekMain = 0;
     document.getElementById("if").src = link;

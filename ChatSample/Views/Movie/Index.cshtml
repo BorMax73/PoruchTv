@@ -1,17 +1,25 @@
-﻿@model poruchTv.Models.Video.Content
+﻿@model poruchTv.Models.Video.ContentInfo
 @{
-    ViewData["Title"] = Model.orig_title;
+    ViewData["Title"] = Model.OriginalTitle;
 }
 <div class="movie-page container">
     <div class="movie-page-details row">
-        <img class="poster-max" src="@Model.imgUrl"/>
+        <img class="poster-max" src="@Model.ImageUrl"/>
         <div style="width: 80%;">
-            <h2>@Model.ru_title</h2>
-            <p>@Model.year</p>
-            <p>@Model.overview</p>
-            <p>@Model.vote_average</p>
-            <form method="post" action="/Movie/Create?urlI=@Model.iframe_src">
-                <input type="hidden" value="@Model.imgUrl" name="PhoneId" />
+            <h2>@Model.Title</h2>
+            <p>@Model.ReleaseDate</p>
+            <p>@Model.Overview</p>
+            <p>@Model.VoteAverage</p>
+            @foreach (var url in ViewBag.Urls)
+            {
+                <form asp-action="Create" asp-controller="Movie">
+                    <p>@url.Title</p>
+                    <input type="hidden" name="urlI" value="@url.Url"/>
+                    <input type="submit" value="Переглянути"/>
+                </form>
+            }
+            <form method="post" action="/Movie/Create?urlI=@*@Model.iframe_src*@">
+                <input type="hidden" value="@Model.ImageUrl" name="PhoneId" />
                 <input #="target" type="submit" class="btn go-button" value="Go"/>
             </form>
         </div>
@@ -24,7 +32,7 @@
         $('#target').html('sending..');
 
         $.ajax({
-            url: '/Movie/Create?urlI=@Model.orig_title',
+            //url: '/Movie/Create?urlI=Model.orig_title',
             type: 'post',
             dataType: 'json',
             contentType: 'application/json',

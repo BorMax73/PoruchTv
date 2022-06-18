@@ -2,7 +2,7 @@
 @using poruchTv.Models.Video
 @using Microsoft.CodeAnalysis
 @using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model poruchTv.Models.PaginatedList<poruchTv.Models.Video.Content>
+@model poruchTv.Models.PaginatedList<ContentInfo>
 
 @{
     ViewData["Title"] = "Films";
@@ -134,12 +134,12 @@
         <div class="results">
             @foreach (var obj in Model)
             {
-                <a href="/Movie?id=@obj.id" onmouseover="this.style.textDecoration = 'none';" class="result">
+                <a href="/Movie?id=@obj.Id" onmouseover="this.style.textDecoration = 'none';" class="result">
                     <div class="poster">
-                        <img class="poster" src="@obj.imgUrl"/>
+                        <img class="poster" src="@obj.ImageUrl"/>
                     </div>
-                    <h4>@obj.orig_title</h4>
-                    <h5>@obj.ru_title</h5>
+                    <h4>@obj.OriginalTitle</h4>
+                    <h5>@obj.OriginalTitle</h5>
                 </a>
             }
         </div>

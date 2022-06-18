@@ -21,8 +21,9 @@ namespace poruchTv.Controllers
         }
         public async Task<IActionResult> Index(int id)
         {
-            var result =await db.contents.FirstOrDefaultAsync(x => x.id == id);
-            
+            var result =await db.ContentInfos.FirstOrDefaultAsync(x => x.Id == id);
+            var urls = await db.ContentUrls.Where(x => x.ContentInfoId == id).ToListAsync();
+            ViewBag.Urls = urls;
             return View(result);
         }
 

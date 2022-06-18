@@ -31,5 +31,7 @@ namespace poruchTv.Models.Video
         [field: NonSerialized]
         public string genre_ids { get; set; }
 
+        [NotMapped]
+        public List<ContentUrls> translations { get; set; }
     }
 }

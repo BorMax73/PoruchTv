@@ -31,8 +31,9 @@
             
             if (User?.Identity.IsAuthenticated == true)
             {
-                var filmId = db.contents.FirstOrDefault(x => x.iframe_src == url);
-                await db.Histories.AddAsync(new History() {Time = DateTime.Now, UserId = User.Identity.Name, FilmId = filmId!.id});
+                var id = await db.ContentUrls.FirstOrDefaultAsync(x => x.Url == url);
+                var filmId = db.ContentInfos.FirstOrDefault(x => x.Id == id.ContentInfoId );
+                await db.Histories.AddAsync(new History() {Time = DateTime.Now, UserId = User.Identity.Name, FilmId = filmId!.Id});
                 await db.SaveChangesAsync();
             }
             if (HttpContext.User.Identity.IsAuthenticated)

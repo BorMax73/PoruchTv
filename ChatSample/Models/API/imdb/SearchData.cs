@@ -4,7 +4,7 @@ namespace poruchTv.Models.API.imdb
 {
     public class SearchData
     {
-        public List<Data> results {
+        public List<Data> movie_results {
             get;
             set;
         }
