@@ -1,4 +1,4 @@
-﻿@model poruchTv.Models.PaginatedList<poruchTv.Models.Video.Content>
+﻿@model poruchTv.Models.PaginatedList<poruchTv.Models.Video.ContentInfo>
 @{
     ViewData["Title"] = "Search";
 }
@@ -7,12 +7,12 @@
     
     @foreach (var obj in Model)
     {
-        <a href="/Movie?id=@obj.id" class="result" onmouseover="this.style.textDecoration = 'none';">
+        <a href="/Movie?id=@obj.Id" class="result" onmouseover="this.style.textDecoration = 'none';">
             <div class="poster">
-                <img class="poster" src="@obj.imgUrl"/>
+                <img class="poster" src="@obj.ImageUrl"/>
             </div>
-            <h3>@obj.orig_title</h3>
-            <h4>@obj.ru_title</h4>
+            <h3>@obj.OriginalTitle</h3>
+            <h4>@obj.Title</h4>
         </a>
     }
 </div>

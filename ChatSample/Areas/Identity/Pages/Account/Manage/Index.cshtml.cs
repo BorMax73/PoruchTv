@@ -46,17 +46,25 @@ namespace poruchTv.Areas.Identity.Pages.Account.Manage
             public string UserName { get; set; }
         }
 
-        public List<Content> History = new List<Content>();
+        public List<ContentInfo> History = new List<ContentInfo>();
         private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var histories = await db.Histories.Where(x => x.UserId == User.Identity.Name).ToListAsync();
-            foreach (var history in histories)
+            try
             {
-                History.Add( await db.contents.FirstOrDefaultAsync(x => x.id == history.FilmId));
+                var histories = await db.Histories.Where(x => x.UserId == User.Identity.Name).ToListAsync();
+                foreach (var history in histories)
+                {
+                    History.Add(await db.ContentInfos.FirstOrDefaultAsync(x => x.Id == history.FilmId));
 
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
            
             
 

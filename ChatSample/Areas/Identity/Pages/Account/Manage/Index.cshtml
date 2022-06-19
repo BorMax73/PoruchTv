@@ -15,9 +15,9 @@
             <div class="history-wrapper">
                 @foreach (var film in Model.History)
                 {
-                    <a href="/Movie?id=@film.id">
-                        <img class="poster" src="@film.imgUrl"/>
-                        <p>@film.orig_title</p>
+                    <a href="/Movie?id=@film.Id">
+                        <img class="poster" src="@film.ImageUrl"/>
+                        <p>@film.OriginalTitle</p>
                     </a>
                 }
             </div>
