@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,13 +46,19 @@ namespace poruchTv.Areas.Identity.Pages.Account.Manage
             
             [Display(Name = "User Name")]
             public string UserName { get; set; }
+            [DataType(DataType.Upload)]
+            [Display(Name = "Avatar")]
+            public IFormFile Avatar { get; set; }
+
+            public byte[] img { get; set; }
         }
 
         public List<ContentInfo> History = new List<ContentInfo>();
         private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            
             try
             {
                 var histories = await db.Histories.Where(x => x.UserId == User.Identity.Name).ToListAsync();
@@ -70,10 +78,9 @@ namespace poruchTv.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber,
-                UserName = userName
-                
-            };
+                UserName = userName,
+                img = user.Avatar
+        };
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -113,6 +120,23 @@ namespace poruchTv.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if (Input.Avatar != null)
+            {
+                byte[] imageData = null;
+                // считываем переданный файл в массив байтов
+                using (var binaryReader = new BinaryReader(Input.Avatar.OpenReadStream()))
+                {
+                    imageData = binaryReader.ReadBytes((int)Input.Avatar.Length);
+                }
+                // установка массива байтов
+                user.Avatar = imageData;
+                var result =  await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set Avatar.";
+                    return RedirectToPage();
+                }
+            }
             var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.UserName);
             if (!setUserNameResult.Succeeded)
             {

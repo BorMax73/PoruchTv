@@ -8,9 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net;
-using ChatSample.Filters;
-using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Http;
 
 namespace ChatSample
 {
@@ -41,6 +38,7 @@ namespace ChatSample
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
+                    //options.SignInScheme
                     options.ClientId = "158218210183-id3i6b5brl8jcs9ehmr53mjbdubgou36.apps.googleusercontent.com";
                     options.ClientSecret = "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"; 
                 });

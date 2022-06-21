@@ -24,7 +24,7 @@ namespace poruchTv.Areas.Identity
 
                 services.AddDefaultIdentity<User>(options =>
                     {
-                        options.SignIn.RequireConfirmedAccount = true;
+                        options.SignIn.RequireConfirmedAccount = false;
                         options.Password.RequireUppercase = false;
                         options.Password.RequireDigit = true;
                         options.Password.RequireNonAlphanumeric = false;

@@ -47,27 +47,27 @@ document.getElementById("js-showMe").addEventListener("click", function (e) {
      window.location.replace("/Home");
     
 });
-var linkUrl = window.location.href;
-var myFunction = function () {
-    var attribute = this.getAttribute("name");
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/Room/Invite?name=" + attribute + "&url=" + linkUrl);
-    xhr.setRequestHeader("Accept", "application/json");
-    xhr.setRequestHeader("Content-Type", "application/json");
+//var linkUrl = window.location.href;
+//var myFunction = function () {
+//    var attribute = this.getAttribute("name");
+//    let xhr = new XMLHttpRequest();
+//    xhr.open("POST", "/Room/Invite?name=" + attribute + "&url=" + linkUrl);
+//    xhr.setRequestHeader("Accept", "application/json");
+//    xhr.setRequestHeader("Content-Type", "application/json");
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            console.log(xhr.status);
-            console.log(xhr.responseText);
-        }
-    };
+//    xhr.onreadystatechange = function () {
+//        if (xhr.readyState === 4) {
+//            console.log(xhr.status);
+//            console.log(xhr.responseText);
+//        }
+//    };
 
-    let data = `{
-  "name": ${attribute}
-   }`;
+//    let data = `{
+//  "name": ${attribute}
+//   }`;
 
-    xhr.send(data);
-};
+//    xhr.send(data);
+//};
 
 for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('click', myFunction, false);

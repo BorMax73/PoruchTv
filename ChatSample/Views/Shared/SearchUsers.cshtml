@@ -8,6 +8,10 @@
 <div>
     @foreach (var user in Model)
     {
+       @* <div>
+            <img src="@user."/>
+        </div>*@
+
         <a href="/user?name=@user.UserName">@user.UserName</a>
     }
 </div>

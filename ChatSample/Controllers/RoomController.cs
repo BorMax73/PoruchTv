@@ -53,6 +53,15 @@
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Enter(string key)
+        {
+            var room = await db.Rooms.FirstOrDefaultAsync(x => x.Name == key);
+            if (room == null)
+                return NotFound();
+            return Redirect($"/Room?key={room.Name}&url={room.FilmUrl}");
+        }
+
         [HttpPost]
         public async Task Invite(string name, string key)
         {
@@ -66,7 +75,7 @@
             if (user == null)
                 return;
             var room =  await db.Rooms.FirstOrDefaultAsync(x => x.Name == key);
-            await hub.Clients.User(user.Id).SendAsync("invite", "test", key, room.FilmUrl);
+            await hub.Clients.User(user.Id).SendAsync("invite", "test", key);
         }
 
     }
